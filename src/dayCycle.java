@@ -7,10 +7,10 @@ public class dayCycle {
     int daySize = 60;
     double nanosecondsPerSecond = 1000000000;
 
-    Color sunriseColor = new Color(247, 105, 73, 125);
-    Color noonColor = new Color(247,105,73,0);
-    Color sunsetColor = new Color(255, 107, 14, 150);
-    Color nightColor = new Color(6,0,44, 220);
+    Color sunriseColor = new Color(255, 255, 224, 60);
+    Color noonColor = new Color(255,255,224,0);
+    Color sunsetColor = new Color(255, 107, 14, 75);
+    Color nightColor = new Color(6,0,44, 110);
 
 
     double dayTime;
@@ -43,9 +43,10 @@ public class dayCycle {
         if (timeOfDay <= noonStartTime) {
             double durationOfSunrise = noonStartTime - sunriseStartTime;
             double sunriseTimer = timeOfDay / noonStartTime;
-            if (sunriseTimer > 0.99)
-                sunriseTimer = 0.99;
             //y = (noonColor - duskColor)/durationOfSunrise * duskTimer + noonColor
+            if ((int) ((noonColor.getAlpha() - sunriseColor.getAlpha())/durationOfSunrise * sunriseTimer + sunriseColor.getAlpha()) <= 0 || (int) ((noonColor.getAlpha() - sunriseColor.getAlpha())/durationOfSunrise * sunriseTimer + sunriseColor.getAlpha()) >= 255) {
+                return noonColor;
+            }
             return new Color(
                     (int) ((noonColor.getRed() - sunriseColor.getRed())/durationOfSunrise * sunriseTimer + sunriseColor.getRed()),
                     (int) ((noonColor.getGreen() - sunriseColor.getGreen())/durationOfSunrise * sunriseTimer + sunriseColor.getGreen()),
@@ -57,8 +58,9 @@ public class dayCycle {
             double noonTimer = (timeOfDay - noonStartTime) / (sunsetStartTime - noonStartTime);
             if (noonTimer > 0.99)
                 noonTimer = 0.99;
-
-            System.out.println((int) ((sunsetColor.getRed() - noonColor.getRed())/durationOfNoon * noonTimer + noonColor.getRed()));
+            if ((int) ((sunsetColor.getRed() - noonColor.getRed())/durationOfNoon * noonTimer + noonColor.getRed()) >= 255 || (int) ((sunsetColor.getRed() - noonColor.getRed())/durationOfNoon * noonTimer + noonColor.getRed()) <= 0) {
+                return sunsetColor;
+            }
             return new Color(
                     (int) ((sunsetColor.getRed() - noonColor.getRed())/durationOfNoon * noonTimer + noonColor.getRed()),
                     (int) ((sunsetColor.getGreen() - noonColor.getGreen())/durationOfNoon * noonTimer + noonColor.getGreen()),
@@ -67,21 +69,30 @@ public class dayCycle {
         }
         if (timeOfDay <= nightStartTime) {
             double durationOfSunset = nightStartTime - sunsetStartTime;
-            double sunsetTime = (timeOfDay - noonStartTime) / (nightStartTime - sunsetStartTime);
-            if (sunsetTime > 0.99)
-                sunsetTime = 0.99;
+            double sunsetTimer = (timeOfDay - sunsetStartTime) / (nightStartTime - sunsetStartTime);
+            if (sunsetTimer > 0.99)
+                sunsetTimer = 0.99;
+
+            if ((int) ((nightColor.getRed() - sunsetColor.getRed())/durationOfSunset * sunsetTimer + sunsetColor.getRed()) >= 255 || (int) ((nightColor.getRed() - sunsetColor.getRed())/durationOfSunset * sunsetTimer + sunsetColor.getRed()) <= 0) {
+                return nightColor;
+            }
+
 
             return new Color(
-                    (int) ((nightColor.getRed() - sunsetColor.getRed())/durationOfSunset * sunsetTime + sunsetColor.getRed()),
-                    (int) ((nightColor.getGreen() - sunsetColor.getGreen())/durationOfSunset * sunsetTime + sunsetColor.getGreen()),
-                    (int) ((nightColor.getBlue() - sunsetColor.getBlue())/durationOfSunset * sunsetTime + sunsetColor.getBlue()),
-                    (int) ((nightColor.getAlpha() - sunsetColor.getAlpha())/durationOfSunset * sunsetTime + sunsetColor.getAlpha()));
+                    (int) ((nightColor.getRed() - sunsetColor.getRed())/durationOfSunset * sunsetTimer + sunsetColor.getRed()),
+                    (int) ((nightColor.getGreen() - sunsetColor.getGreen())/durationOfSunset * sunsetTimer + sunsetColor.getGreen()),
+                    (int) ((nightColor.getBlue() - sunsetColor.getBlue())/durationOfSunset * sunsetTimer + sunsetColor.getBlue()),
+                    (int) ((nightColor.getAlpha() - sunsetColor.getAlpha())/durationOfSunset * sunsetTimer + sunsetColor.getAlpha()));
         }
         if (timeOfDay <= endOfDay) {
             double durationOfNight = endOfDay - nightStartTime;
             double nightTimer = (timeOfDay - nightStartTime) / (endOfDay - nightStartTime);
             if (nightTimer > 0.99)
                 nightTimer = 0.99;
+
+            if ((int) ((sunriseColor.getRed() - nightColor.getRed())/durationOfNight * nightTimer + nightColor.getRed()) >= 255 || (int) ((sunriseColor.getRed() - nightColor.getRed())/durationOfNight * nightTimer + nightColor.getRed()) <= 0) {
+                return sunriseColor;
+            }
 
             return new Color(
                     (int) ((sunriseColor.getRed() - nightColor.getRed())/durationOfNight * nightTimer + nightColor.getRed()),

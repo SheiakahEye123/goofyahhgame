@@ -31,7 +31,7 @@ public class main {
         for (int i = 0; i < 17; i++) {
             ArrayList<tile> ylist = new ArrayList<tile>();
             for (int e = 0; e < 30; e++) {
-                ylist.add(new ground(false, new ImageIcon("src/textures/cobble.jpg")));
+                ylist.add(new ground());
             }
             tiles.tiles.add(ylist);
         }
@@ -40,7 +40,7 @@ public class main {
             ArrayList<tile> ylistw = new ArrayList<tile>();
             for (int e2 = 0; e2 < 17; e2++) {
                 if (Math.random() < 0.2) {
-                    ylistw.add(new ground(false, new ImageIcon("src/textures/large.jpg")));
+                    ylistw.add(new ground());
                 }
                 else {
                     ylistw.add(null);
