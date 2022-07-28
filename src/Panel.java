@@ -6,6 +6,8 @@ public class Panel extends JPanel{
     tiles2 tiles2;
     Player player;
 
+    shadows shadows;
+
     dayCycle dayCycle;
 
     static int framesRendered;
@@ -13,11 +15,12 @@ public class Panel extends JPanel{
 
 
     Graphics2D brush;
-    public Panel(tiles tiles_, tiles2 tiles2_, Player player_, dayCycle dayCycle_) {
+    public Panel(tiles tiles_, tiles2 tiles2_, Player player_, dayCycle dayCycle_, shadows shadows_) {
         tiles = tiles_;
         player = player_;
         tiles2 = tiles2_;
         dayCycle = dayCycle_;
+        shadows = shadows_;
     }
     public void paintComponent(Graphics g) {
         player.startFPS = System.nanoTime();
@@ -39,11 +42,16 @@ public class Panel extends JPanel{
         //panel.update(tiles, tiles2, Player, dayCycle);
         super.paintComponent (g);
         brush = (Graphics2D) g;
-        tiles.draw(g);
-        tiles2.draw(g);
+        tiles.draw(g,tiles.tilesWithinScreen());
+        tiles2.draws(g,tiles2.tilesWithinScreens());
         player.draw(g);
-        brush.setColor(dayCycle.setSkyColor());
-        brush.fillRect(0,0,1920,1080);
+        //brush.setColor(dayCycle.setSkyColor());
+        brush.setColor(Color.red);
+        shadows.rayCast(960,540,tiles, brush);
+        //shadows.rayDraw(brush);
+        shadows.rayClear();
+
+        //brush.fillRect(0,0,1920,1080);
         framesRendered += 1;
         player.elapsedFrame = Math.abs(player.startFPS - player.endFPS);
         player.endFPS = player.startFPS;

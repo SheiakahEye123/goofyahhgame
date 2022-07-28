@@ -3,9 +3,9 @@ import java.awt.*;
 
 
 public class ground extends tile {
-    public ground() {
-        breakable = false;
-        image = new ImageIcon("src/textures/cobble.jpg").getImage();
+    public ground(boolean b, ImageIcon icon) {
+        breakable = b;
+        image = icon.getImage();
         blocktype = "ground";
     }
 }

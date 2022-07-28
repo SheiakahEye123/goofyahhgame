@@ -19,6 +19,7 @@ public class main {
         int fps = 0;
 
         dayCycle dayCycle = new dayCycle();
+        shadows shadows = new shadows(dayCycle,tiles2);
 
         Listener Listener = new Listener();
         Player Player = new Player(Listener);
@@ -31,7 +32,7 @@ public class main {
         for (int i = 0; i < 17; i++) {
             ArrayList<tile> ylist = new ArrayList<tile>();
             for (int e = 0; e < 30; e++) {
-                ylist.add(new ground());
+                ylist.add(new ground(false, new ImageIcon("src/textures/cobble.jpg")));
             }
             tiles.tiles.add(ylist);
         }
@@ -40,7 +41,7 @@ public class main {
             ArrayList<tile> ylistw = new ArrayList<tile>();
             for (int e2 = 0; e2 < 17; e2++) {
                 if (Math.random() < 0.2) {
-                    ylistw.add(new ground());
+                    ylistw.add(new ground(false, new ImageIcon("src/textures/large.jpg")));
                 }
                 else {
                     ylistw.add(null);
@@ -50,7 +51,7 @@ public class main {
             tiles2.tiles.add(ylistw);
         }
 
-        Panel panel = new Panel(tiles, tiles2, Player, dayCycle);
+        Panel panel = new Panel(tiles, tiles2, Player, dayCycle, shadows);
         panel.setSize(1920, 1080);
         screen.add(panel);
         panel.setDoubleBuffered(true);
