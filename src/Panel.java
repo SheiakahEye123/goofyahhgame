@@ -47,7 +47,7 @@ public class Panel extends JPanel{
         player.draw(g);
         //brush.setColor(dayCycle.setSkyColor());
         brush.setColor(Color.red);
-        shadows.rayCast(960,540,tiles, brush);
+        shadows.rayCast(tiles.xadd,tiles.yadd,tiles2, brush);
         //shadows.rayDraw(brush);
         shadows.rayClear();
 
