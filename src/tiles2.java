@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -51,6 +52,12 @@ public class tiles2 extends tiles{
             }
         }
         return tilesOnScreen;
+    }
+
+    public void placetile(double mx,double my) {
+        var mxp = (int) (mx/64);
+        var myp = (int) (my/64);
+        //tiles.get(myp).get(mxp) = new bloodwater(true,new ImageIcon("src/textures/large.jpg"));
     }
 
 

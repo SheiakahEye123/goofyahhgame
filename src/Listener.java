@@ -3,17 +3,25 @@ import java.awt.event.*;
 
 
 
-public class Listener extends JPanel implements KeyListener, ActionListener {
+public class Listener extends JPanel implements KeyListener, MouseListener, ActionListener {
     boolean w;
     boolean a;
     boolean s;
     boolean d;
     boolean jump = false;
 
+    double mousex;
+    double mousey;
+
+    boolean button1;
+    boolean button2;
+    boolean button3;
+
 
 
     public void Listener() {
         addKeyListener(this);
+        addMouseListener(this);
     }
     public void actionPerformed(ActionEvent e) {
     }
@@ -59,4 +67,72 @@ public class Listener extends JPanel implements KeyListener, ActionListener {
         }
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        int c = e.getButton();
+        if (c == MouseEvent.BUTTON1) {
+            button1 = true;
+            mousex = e.getX();
+            mousey = e.getY();
+        }
+        if (c == MouseEvent.BUTTON2) {
+            button2 = true;
+            mousex = e.getX();
+            mousey = e.getY();
+        }
+        if (c == MouseEvent.BUTTON3) {
+            button3 = true;
+            mousex = e.getX();
+            mousey = e.getY();
+        }
+        if (c == MouseEvent.NOBUTTON) {
+            button1 = false;
+            button2 = false;
+            button3 = false;
+            mousex = e.getX();
+            mousey = e.getY();
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        int c = e.getButton();
+        if (c == MouseEvent.BUTTON1) {
+            button1 = false;
+            mousex = e.getX();
+            mousey = e.getY();
+        }
+        if (c == MouseEvent.BUTTON2) {
+            button2 = false;
+            mousex = e.getX();
+            mousey = e.getY();
+        }
+        if (c == MouseEvent.BUTTON3) {
+            button3 = false;
+            mousex = e.getX();
+            mousey = e.getY();
+        }
+        if (c == MouseEvent.NOBUTTON) {
+            button1 = false;
+            button2 = false;
+            button3 = false;
+            mousex = e.getX();
+            mousey = e.getY();
+        }
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }

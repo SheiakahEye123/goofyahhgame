@@ -23,6 +23,7 @@ public class main {
 
         Listener Listener = new Listener();
         Player Player = new Player(Listener);
+        var creature = new creature(tiles2,1,1,new ImageIcon("src/textures/guy.png").getImage(), Player.listener);
         screen.addKeyListener(Listener);
         screen.setFocusable(true);
         screen.setFocusTraversalKeysEnabled(false);
@@ -51,7 +52,12 @@ public class main {
             tiles2.tiles.add(ylistw);
         }
 
-        Panel panel = new Panel(tiles, tiles2, Player, dayCycle, shadows);
+        tiles2.tiles.get(0).set(0,null);
+        tiles2.tiles.get(0).set(1,null);
+        tiles2.tiles.get(1).set(1,null);
+        tiles2.tiles.get(1).set(0,null);
+
+        Panel panel = new Panel(tiles, tiles2, Player, dayCycle, shadows, creature);
         panel.setSize(1920, 1080);
         screen.add(panel);
         panel.setDoubleBuffered(true);

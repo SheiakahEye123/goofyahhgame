@@ -13,8 +13,6 @@ public class dayCycle {
     Color sunsetColor = new Color(255, 107, 14, 150);
     Color nightColor = new Color(6,0,44, 220);
 
-
-    double dayTime;
     long startTime = System.nanoTime();
     long endTime;
 
