@@ -8,10 +8,10 @@ public class dayCycle {
     int daySize = 60;
     double nanosecondsPerSecond = 1000000000;
 
-    Color sunriseColor = new Color(247, 105, 73, 125);
+    Color sunriseColor = new Color(247, 105, 73, 40);
     Color noonColor = new Color(247,105,73,0);
-    Color sunsetColor = new Color(255, 107, 14, 150);
-    Color nightColor = new Color(6,0,44, 220);
+    Color sunsetColor = new Color(255, 107, 14, 70);
+    Color nightColor = new Color(6,0,44, 100);
 
     long startTime = System.nanoTime();
     long endTime;
@@ -28,7 +28,7 @@ public class dayCycle {
         dayCounter = (elapsedTime/nanosecondsPerSecond)/daySize;
     }
     public Color setSkyColor() {
-        double timeOfDay = dayCounter%1;
+        timeOfDay = dayCounter%1;
         if (timeOfDay <= 0.0) {
             return sunriseColor;
         }

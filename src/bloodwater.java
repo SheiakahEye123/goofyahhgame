@@ -4,9 +4,9 @@ import java.awt.*;
 
 public class bloodwater extends tile {
 
-    public bloodwater(boolean b, ImageIcon icon) {
-        breakable = b;
-        image = icon.getImage();
+    public bloodwater() {
+        breakable = false;
+        image = new ImageIcon("src/textures/large.jpg").getImage();
         blocktype = "bloodwater";
     }
 }

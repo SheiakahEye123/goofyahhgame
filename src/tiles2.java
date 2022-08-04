@@ -30,6 +30,18 @@ public class tiles2 extends tiles{
         for (int y = 0; y < tilesos.size(); y++) {
             for (int x = 0; x < tilesos.get(y).size(); x++) {
                 if (tilesos.get(y).get(x) != null) {
+                    if (y > 0 && y < tilesos.size() - 1) {
+                        if (tilesos.get(y).get(x).type() == "fence1" && (tilesos.get(y - 1).get(x) != null || tilesos.get(y + 1).get(x) != null)) {
+                            tilesos.get(y).get(x).image = new ImageIcon("src/textures/fence2.png").getImage();
+                            tilesos.get(y).get(x).blocktype = "fence2";
+                        }
+                    }
+                    if (x > 0 && x < tilesos.get(0).size() - 1) {
+                        if (tilesos.get(y).get(x).type() == "fence2" && (tilesos.get(y).get(x - 1) != null || tilesos.get(y).get(x + 1) != null)) {
+                            tilesos.get(y).get(x).image = new ImageIcon("src/textures/fence2.png").getImage();
+                            tilesos.get(y).get(x).blocktype = "fence1";
+                        }
+                    }
                     brush.drawImage(tilesos.get(y).get(x).image, (int) (((x + -xadd) * tileSize) + 960), (int) (((y + -yadd) * tileSize) + 540), null);
                 }
             }
@@ -54,10 +66,11 @@ public class tiles2 extends tiles{
         return tilesOnScreen;
     }
 
-    public void placetile(double mx,double my) {
-        var mxp = (int) (mx/64);
-        var myp = (int) (my/64);
-        //tiles.get(myp).get(mxp) = new bloodwater(true,new ImageIcon("src/textures/large.jpg"));
+    public void streetTree(int x, int y) {
+    }
+
+    public void createRoad(int x, int y) {
+
     }
 
 

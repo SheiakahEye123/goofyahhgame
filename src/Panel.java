@@ -57,9 +57,6 @@ public class Panel extends JPanel{
         creature.draw(g);
         player.draw(g);
 
-        brush.setColor(dayCycle.setSkyColor());
-        brush.fillRect(0,0,1920,1080);
-        brush.setColor(Color.red);
         var rays = shadows.rayCast(tiles.xadd,tiles.yadd,tiles2, g, dayCycle.dayCounter%1);
         //shadows.rayDraw(brush);
         //System.out.println(shadows.xpoints[1]);
@@ -97,10 +94,14 @@ public class Panel extends JPanel{
         //g.drawLine(xpoints[rays.size()], ypoints[rays.size()], xpoints[rays.size()+1],ypoints[rays.size()+1]);
 
         System.out.println();
+        Color skycolor = dayCycle.setSkyColor();
 
-        brush.setColor(new Color(0,0,25,200));
+        brush.setColor(new Color(0,0,40, skycolor.getAlpha()));
         brush.fillPolygon(xpoints, ypoints, rays.size() + 7);
         shadows.rayClear();
+
+        brush.setColor(skycolor);
+        brush.fillRect(0,0,1920,1080);
 
         //brush.fillRect(0,0,1920,1080);
         framesRendered += 1;

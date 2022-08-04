@@ -3,8 +3,8 @@ public class accelerate {
     double vely = 0;
     double width = 64;
     double length = 64;
-    double speed = 0.0000000000005;
-    double friction = 0.95;
+    double speed = 0.00000000000015;
+    double friction = 0.90;
     Listener listener;
     double accelerationx;
     double accelerationy;
