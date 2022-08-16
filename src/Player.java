@@ -9,6 +9,8 @@ public class Player extends accelerate{
     int stamina = 100;
     double dmg = 0.1;
     int sanity = 100;
+    double x = 10;
+    double y = 10;
     inventory inventory = new inventory(vely, velx);
     Image sprite = new ImageIcon("src/textures/guy.png").getImage();
 

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class main {
     public static void main (String Args[]) {
         JFrame screen = new JFrame();
+        Listener Listener = new Listener();
+        Player Player = new Player(Listener);
         tiles tiles = new tiles(Path.of("src/textures/map.txt"));
         tiles2 tiles2 = new tiles2(Path.of("src/textures/map2.txt"));
         screen.setSize(1920,1080);
@@ -18,9 +20,6 @@ public class main {
 
         dayCycle dayCycle = new dayCycle();
         shadows shadows = new shadows(dayCycle,tiles2);
-
-        Listener Listener = new Listener();
-        Player Player = new Player(Listener);
         inventory inventory = new inventory(Player.vely, Player.velx);
         var creature = new creature(tiles2,1,1,new ImageIcon("src/textures/guy.png").getImage(), Player.listener);
         screen.addKeyListener(Listener);
@@ -37,10 +36,6 @@ public class main {
         panel.setSize(1920, 1080);
         screen.add(panel);
         panel.setDoubleBuffered(true);
-        panel.tiles2.xadd = 10;
-        panel.tiles2.yadd = 10;
-        panel.tiles.xadd = 10;
-        panel.tiles.yadd = 10;
 
 
 

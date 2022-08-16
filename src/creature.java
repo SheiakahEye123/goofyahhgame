@@ -18,7 +18,7 @@ public class creature extends accelerate{
         listener = listener_;
     }
 
-    public void draw(Graphics g){
-        g.drawImage(image, (int) ((x - tiles2.xadd) * 64 + 960), (int) ((y - tiles2.yadd) * 64 + 540),null);
+    public void draw(Graphics g, double x_, double y_){
+        g.drawImage(image, (int) ((x - x_) * 64 + 960), (int) ((y - y_) * 64 + 540),null);
     }
 }

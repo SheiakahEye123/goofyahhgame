@@ -34,14 +34,16 @@ public class Panel extends JPanel{
         creature.accelerate();
         creature.listener = player.listener;
 
-        if (!tiles2.isCollided(tiles2.xadd + player.velx, tiles2.yadd, tiles2)) {
-            tiles.xadd += player.velx;
-            tiles2.xadd += player.velx;
+        player.x += player.velx;
+        player.y += player.vely;
+
+        if (!tiles2.isCollided(player.x + player.velx, player.y, tiles2)) {
+            player.x += player.velx;
             //System.out.println(tiles2.xadd + "/" + tiles2.yadd);
         }
-        if (!tiles2.isCollided(tiles2.xadd, tiles2.yadd + player.vely, tiles2)) {
-            tiles.yadd += player.vely;
-            tiles2.yadd += player.vely;
+        if (!tiles2.isCollided(player.x, player.y + player.vely, tiles2)) {
+            player.y += player.vely;
+
         }
 
         creature.x += creature.velx;
@@ -57,10 +59,13 @@ public class Panel extends JPanel{
         //panel.update(tiles, tiles2, Player, dayCycle);
         super.paintComponent (g);
         brush = (Graphics2D) g;
-        var tilesos = tiles2.tilesWithinScreen(g);
-        tiles.draw(g,tiles.tilesWithinScreen(g));
-        tiles2.draws(g,tilesos);
-        creature.draw(g);
+
+        var tilesWithinScreen = tiles.tilesWithinScreen(g, player.x, player.y);
+        var tilesWithinScreen2 = tiles2.tilesWithinScreen(g, player.x, player.y);
+
+        tiles.draw(g,tilesWithinScreen, player.x % 1, player.y % 1);
+        tiles2.draw(g,tilesWithinScreen2, player.x % 1, player.y % 1);
+        creature.draw(g,player.x, player.y);
         player.draw(g);
 
         var rays = shadows.rayCast(8.5,6,tiles2, g, dayCycle.dayCounter%1);
@@ -86,16 +91,16 @@ public class Panel extends JPanel{
         xpoints[4] = 0;
         ypoints[4] = 0;
 
-        xpoints[5] = (int) ((rays.get(0).endx - tiles2.xadd) * 64 + 960);
-        ypoints[5] = (int) ((rays.get(0).endy - tiles2.yadd) * 64 + 540);
+        xpoints[5] = (int) ((rays.get(0).endx - player.x) * 64 + 960);
+        ypoints[5] = (int) ((rays.get(0).endy - player.y) * 64 + 540);
 
         for (int i = 6; i < rays.size() + 6; i++) {
-            xpoints[i] = (int) ((rays.get(i - 6).endx - tiles2.xadd) * 64 + 960);
-            ypoints[i] = (int) ((rays.get(i - 6).endy - tiles2.yadd) * 64 + 540);
+            xpoints[i] = (int) ((rays.get(i - 6).endx - player.x) * 64 + 960);
+            ypoints[i] = (int) ((rays.get(i - 6).endy - player.y) * 64 + 540);
         }
 
-        xpoints[rays.size() +  6] = (int) ((rays.get(0).endx - tiles2.xadd) * 64 + 960);
-        ypoints[rays.size() + 6] = (int) ((rays.get(0).endy - tiles2.yadd) * 64 + 540);
+        xpoints[rays.size() +  6] = (int) ((rays.get(0).endx - player.x) * 64 + 960);
+        ypoints[rays.size() + 6] = (int) ((rays.get(0).endy - player.y) * 64 + 540);
 
         //g.drawLine(xpoints[rays.size()], ypoints[rays.size()], xpoints[rays.size()+1],ypoints[rays.size()+1]);
 
