@@ -68,7 +68,7 @@ public class Panel extends JPanel{
         creature.draw(g,player.x, player.y);
         player.draw(g);
 
-        var rays = shadows.rayCast(8.5,6,tiles2, g, dayCycle.dayCounter%1);
+        var rays = shadows.rayCast(8.5,6, tilesWithinScreen, g, dayCycle.dayCounter%1);
         //shadows.rayDraw(brush);
         //System.out.println(shadows.xpoints[1]);
 

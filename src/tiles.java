@@ -40,7 +40,7 @@ public class tiles {
                 }
                 tileslist.add(ylist);
             }
-        } catch (IOException x) {
+        } catch (IOException e) {
             System.err.format("doesnt work");
         }
 
