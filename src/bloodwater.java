@@ -8,5 +8,6 @@ public class bloodwater extends tile {
         breakable = false;
         image = new ImageIcon("src/textures/large.jpg").getImage();
         blocktype = "bloodwater";
+        Color color = new Color(255, 87, 51);
     }
 }

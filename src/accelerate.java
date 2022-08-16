@@ -22,7 +22,6 @@ public class accelerate {
 
         if (listener.w) {
             accelerationy = -1;
-            System.out.println("sdf");
         }
         if (listener.s) {
             accelerationy = 1;

@@ -31,7 +31,7 @@ public class shadows {
     public ArrayList<ray> rayCast(double startx, double starty, tiles2 tiles, Graphics g, double dayTime) {
         npoints = 0;
         int tilesize = 64;
-        var tiless = tiles.tilesWithinScreens();
+        var tiless = tiles.tilesWithinScreen(g);
         var sunRays = new ArrayList<ray>();
 
 

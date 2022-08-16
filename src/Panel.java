@@ -16,14 +16,17 @@ public class Panel extends JPanel{
 
     creature creature;
 
+    inventory inventory;
+
     Graphics2D brush;
-    public Panel(tiles tiles_, tiles2 tiles2_, Player player_, dayCycle dayCycle_, shadows shadows_, creature creature_) {
+    public Panel(tiles tiles_, tiles2 tiles2_, Player player_, dayCycle dayCycle_, shadows shadows_, creature creature_, inventory inventory_) {
         tiles = tiles_;
         player = player_;
         tiles2 = tiles2_;
         dayCycle = dayCycle_;
         shadows = shadows_;
         creature = creature_;
+        inventory = inventory_;
     }
     public void paintComponent(Graphics g) {
         player.startFPS = System.nanoTime();
@@ -34,6 +37,7 @@ public class Panel extends JPanel{
         if (!tiles2.isCollided(tiles2.xadd + player.velx, tiles2.yadd, tiles2)) {
             tiles.xadd += player.velx;
             tiles2.xadd += player.velx;
+            //System.out.println(tiles2.xadd + "/" + tiles2.yadd);
         }
         if (!tiles2.isCollided(tiles2.xadd, tiles2.yadd + player.vely, tiles2)) {
             tiles.yadd += player.vely;
@@ -45,6 +49,7 @@ public class Panel extends JPanel{
 
 
 
+
         //Player.movex = Listener.movex;
         //Player.movey = Listener.movey;
 
@@ -52,12 +57,13 @@ public class Panel extends JPanel{
         //panel.update(tiles, tiles2, Player, dayCycle);
         super.paintComponent (g);
         brush = (Graphics2D) g;
-        tiles.draw(g,tiles.tilesWithinScreen());
-        tiles2.draws(g,tiles2.tilesWithinScreens());
+        var tilesos = tiles2.tilesWithinScreen(g);
+        tiles.draw(g,tiles.tilesWithinScreen(g));
+        tiles2.draws(g,tilesos);
         creature.draw(g);
         player.draw(g);
 
-        var rays = shadows.rayCast(tiles.xadd,tiles.yadd,tiles2, g, dayCycle.dayCounter%1);
+        var rays = shadows.rayCast(8.5,6,tiles2, g, dayCycle.dayCounter%1);
         //shadows.rayDraw(brush);
         //System.out.println(shadows.xpoints[1]);
 
@@ -93,7 +99,6 @@ public class Panel extends JPanel{
 
         //g.drawLine(xpoints[rays.size()], ypoints[rays.size()], xpoints[rays.size()+1],ypoints[rays.size()+1]);
 
-        System.out.println();
         Color skycolor = dayCycle.setSkyColor();
 
         brush.setColor(new Color(0,0,40, skycolor.getAlpha()));

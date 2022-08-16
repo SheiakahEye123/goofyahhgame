@@ -1,26 +1,32 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class tiles2 extends tiles{
-    ArrayList<ArrayList<tile>> tiles = new ArrayList<ArrayList<tile>>();
+    public tiles2(Path src) {
+        super(src);
+    }
     public boolean isCollided(double xadd, double yadd, tiles2 tiles2) {
-        if (xadd >= tiles2.tiles.get(0).size() - 1.5|| yadd >= tiles2.tiles.size() - 1.5) {
+        if (xadd >= tiles2.tileslist.get(0).size() - 1.5|| yadd >= tiles2.tileslist.size() - 1.5) {
             return true;
         }
         if (xadd <= 0.5 || yadd <= 0.5) {
             return true;
         }
-        if (tiles2.tiles.get((int)(yadd - 0.45)).get((int)(xadd - 0.45)) != null) {
+        if (tiles2.tileslist.get((int)(yadd - 0.45)).get((int)(xadd - 0.45)) != null) {
             return true;
         }
-        if (tiles2.tiles.get((int)(yadd + 0.45)).get((int)(xadd + 0.45)) != null) {
+        if (tiles2.tileslist.get((int)(yadd + 0.45)).get((int)(xadd + 0.45)) != null) {
             return true;
         }
-        if (tiles2.tiles.get((int)(yadd - 0.45)).get((int)(xadd + 0.45)) != null) {
+        if (tiles2.tileslist.get((int)(yadd - 0.45)).get((int)(xadd + 0.45)) != null) {
             return true;
         }
-        if (tiles2.tiles.get((int)(yadd + 0.45)).get((int)(xadd - 0.45)) != null) {
+        if (tiles2.tileslist.get((int)(yadd + 0.45)).get((int)(xadd - 0.45)) != null) {
             return true;
         }
         return false;
@@ -42,28 +48,12 @@ public class tiles2 extends tiles{
                             tilesos.get(y).get(x).blocktype = "fence1";
                         }
                     }
-                    brush.drawImage(tilesos.get(y).get(x).image, (int) (((x + -xadd) * tileSize) + 960), (int) (((y + -yadd) * tileSize) + 540), null);
+                    brush.drawImage(tilesos.get(y).get(x).image, (int) ((x)* tileSize), (int) ((y) * tileSize), null);
+                    brush.setColor(Color.red);
+                    brush.fillRect(x*15,y*15,15,15);
                 }
             }
         }
-    }
-
-    public ArrayList<ArrayList<tile>> tilesWithinScreens() {
-        var tilesOnScreen = new ArrayList<ArrayList<tile>>();
-        //var ylist = new ArrayList<tile>();
-
-        for (int y = 0; y < tiles.size(); y++) {
-            if ((yadd - 13.0) < y && y < (yadd + 13.0)) {
-                ArrayList<tile> rowArray = new ArrayList<tile>();
-                for (int x = 0; x < tiles.get(y).size(); x++) {
-                    if ((xadd - 17.0) < x && x < (xadd + 17.0)) {
-                        rowArray.add(tiles.get(y).get(x));
-                    }
-                }
-                tilesOnScreen.add(rowArray);
-            }
-        }
-        return tilesOnScreen;
     }
 
     public void streetTree(int x, int y) {

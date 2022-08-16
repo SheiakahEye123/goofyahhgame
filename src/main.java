@@ -1,14 +1,12 @@
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyEvent;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class main {
     public static void main (String Args[]) {
         JFrame screen = new JFrame();
-        tiles tiles = new tiles();
-        tiles2 tiles2 = new tiles2();
+        tiles tiles = new tiles(Path.of("src/textures/map.txt"));
+        tiles2 tiles2 = new tiles2(Path.of("src/textures/map2.txt"));
         screen.setSize(1920,1080);
         screen.setExtendedState(JFrame.MAXIMIZED_BOTH);
         screen.setUndecorated(false);
@@ -23,48 +21,26 @@ public class main {
 
         Listener Listener = new Listener();
         Player Player = new Player(Listener);
+        inventory inventory = new inventory(Player.vely, Player.velx);
         var creature = new creature(tiles2,1,1,new ImageIcon("src/textures/guy.png").getImage(), Player.listener);
         screen.addKeyListener(Listener);
         screen.setFocusable(true);
         screen.setFocusTraversalKeysEnabled(false);
 
 
+        //tiles2.tileslist2.get(0).set(0,null);
+        //tiles2.tileslist2.get(0).set(1,null);
+        //tiles2.tileslist2.get(1).set(1,null);
+        //tiles2.tileslist2.get(1).set(0,null);
 
-        for (int i = 0; i < 17; i++) {
-            ArrayList<tile> ylist = new ArrayList<tile>();
-            for (int e = 0; e < 30; e++) {
-                ylist.add(new ground());
-            }
-            tiles.tiles.add(ylist);
-        }
-
-        for (int i2 = 0; i2 < 30; i2++) {
-            ArrayList<tile> ylistw = new ArrayList<tile>();
-            for (int e2 = 0; e2 < 17; e2++) {
-                if (Math.random() < 0.2) {
-                    ylistw.add(new fence());
-                }
-                else {
-                    ylistw.add(null);
-                }
-
-            }
-            tiles2.tiles.add(ylistw);
-        }
-
-        tiles2.tiles.get(0).set(0,null);
-        tiles2.tiles.get(0).set(1,null);
-        tiles2.tiles.get(1).set(1,null);
-        tiles2.tiles.get(1).set(0,null);
-
-        Panel panel = new Panel(tiles, tiles2, Player, dayCycle, shadows, creature);
+        Panel panel = new Panel(tiles, tiles2, Player, dayCycle, shadows, creature, inventory);
         panel.setSize(1920, 1080);
         screen.add(panel);
         panel.setDoubleBuffered(true);
-        panel.tiles2.xadd = 1;
-        panel.tiles2.yadd = 1;
-        panel.tiles.xadd = 1;
-        panel.tiles.yadd = 1;
+        panel.tiles2.xadd = 10;
+        panel.tiles2.yadd = 10;
+        panel.tiles.xadd = 10;
+        panel.tiles.yadd = 10;
 
 
 

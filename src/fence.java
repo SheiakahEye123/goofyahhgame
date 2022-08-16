@@ -8,6 +8,7 @@ public class fence extends tile{
         breakable = false;
         image = new ImageIcon("src/textures/fence1.png").getImage();
         blocktype = "fence1";
+        Color color = new Color(165, 93, 53);
     }
 
 

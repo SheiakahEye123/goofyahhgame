@@ -8,6 +8,7 @@ public class Listener extends JPanel implements KeyListener, MouseListener, Acti
     boolean a;
     boolean s;
     boolean d;
+    boolean e;
     boolean jump = false;
 
     double mousex;
@@ -23,11 +24,11 @@ public class Listener extends JPanel implements KeyListener, MouseListener, Acti
         addKeyListener(this);
         addMouseListener(this);
     }
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent E) {
     }
 
-    public void keyPressed(KeyEvent e) {
-        int c = e.getKeyCode();
+    public void keyPressed(KeyEvent E) {
+        int c = E.getKeyCode();
 
         if (c == KeyEvent.VK_LEFT || c == KeyEvent.VK_A) {
             a = true;
@@ -41,14 +42,17 @@ public class Listener extends JPanel implements KeyListener, MouseListener, Acti
         if (c == KeyEvent.VK_DOWN || c == KeyEvent.VK_S) {
             s = true;
         }
+        if (c == KeyEvent.VK_E) {
+            e = true;
+        }
         if (c == KeyEvent.VK_SPACE) {
             jump = true;
         }
     }
 
-    public void keyTyped(KeyEvent e) {}
-    public void keyReleased(KeyEvent e) {
-        int c = e.getKeyCode();
+    public void keyTyped(KeyEvent E) {}
+    public void keyReleased(KeyEvent E) {
+        int c = E.getKeyCode();
 
         if (c == KeyEvent.VK_LEFT || c == KeyEvent.VK_A) {
             a = false;
@@ -64,6 +68,9 @@ public class Listener extends JPanel implements KeyListener, MouseListener, Acti
         }
         if (c == KeyEvent.VK_SPACE) {
             jump = false;
+        }
+        if (c == KeyEvent.VK_E) {
+            e = false;
         }
     }
 
