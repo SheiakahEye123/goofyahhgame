@@ -1,4 +1,6 @@
 
+import com.sun.tools.javac.Main;
+
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,9 +10,6 @@ import java.util.ArrayList;
 
 public class tiles {
     ArrayList<ArrayList<tile>> tileslist = new ArrayList<ArrayList<tile>>(24);
-
-    int tileSize = 64;
-
 
     public tiles(Path src) {
 
@@ -50,7 +49,7 @@ public class tiles {
         for (int y = 0; y < tilesToDraw.size(); y++) {
             for (int x = 0; x < tilesToDraw.get(y).size(); x++) {
                 if (tilesToDraw.get(y).get(x) != null) {
-                    brush.drawImage(tilesToDraw.get(y).get(x).image, (int) ((x + -x_) * tileSize), (int) ((y + -y_) * tileSize), null);
+                    brush.drawImage(tilesToDraw.get(y).get(x).image, (int) ((x + -x_) * main.tileSize), (int) ((y + -y_) * main.tileSize), null);
                     brush.setColor(tilesToDraw.get(y).get(x).color);
                     brush.fillRect(x*15,y*15,15,15);
                 }
@@ -59,16 +58,16 @@ public class tiles {
     }
     public ArrayList<ArrayList<tile>> tilesWithinScreen(Graphics g, double x, double y) {
         ArrayList<ArrayList<tile>> tilesOnScreen = new ArrayList<ArrayList<tile>>();
-        double left = x - 17;
-        double right = x + 17;
-        double top = y - 12;
-        double bottom = y + 12;
+        double left = x - main.screenWidthTiles/2;
+        double right = x + main.screenWidthTiles/2;
+        double top = y - main.screenHeightTiles/2;
+        double bottom = y + main.screenHeightTiles/2;
 
 
         for (double i = top; i < bottom; i++) {
             if (i < 0 || i >= tileslist.size()) {
                 var ylist = new ArrayList<tile>();
-                for (int e = 0; e < 34; e++) {
+                for (int e = 0; e < main.screenWidthTiles; e++) {
                     ylist.add(null);
                 }
                 tilesOnScreen.add(ylist);

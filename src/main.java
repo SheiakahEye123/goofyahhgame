@@ -3,6 +3,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class main {
+    static int tileSize = 64;
+    static double screenWidthTiles = 30;
+    static double screenHeightTiles = 18;
     public static void main (String Args[]) {
         JFrame screen = new JFrame();
         Listener Listener = new Listener();

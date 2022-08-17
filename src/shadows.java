@@ -30,7 +30,6 @@ public class shadows {
 
     public ArrayList<ray> rayCast(double startx, double starty, ArrayList<ArrayList<tile>> tiless, Graphics g) {
         npoints = 0;
-        int tilesize = 64;
         var sunRays = new ArrayList<ray>();
 
 
@@ -48,10 +47,6 @@ public class shadows {
                 }
             }
         }
-
-        //var xpoints = new ArrayList<Integer>();
-        //var ypoints = new ArrayList<Integer>();
-
         for (ray ray : rays) {
             double angle = Math.atan2((ray.endy - ray.starty), (ray.endx - ray.startx));
             ray.angle = angle;

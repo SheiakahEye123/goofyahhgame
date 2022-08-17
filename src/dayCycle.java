@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.sql.SQLOutput;
 
 public class dayCycle {
     double timeOfDay;

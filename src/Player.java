@@ -10,7 +10,7 @@ public class Player extends accelerate{
     double dmg = 0.1;
     int sanity = 100;
     double x = 10;
-    double y = 10;
+    double y = 5;
     inventory inventory = new inventory(vely, velx);
     Image sprite = new ImageIcon("src/textures/guy.png").getImage();
 
@@ -23,7 +23,8 @@ public class Player extends accelerate{
         g.setColor(Color.red);
         inventory.draw(g);
         //g.fillOval((int)(960 - width/2), (int)(540 - (int) length/2), (int) width, (int) length);
-        g.drawImage(sprite, (int)(960 - width/2), (int)(540 - (int) length/2), null);
+        g.drawImage(sprite, (int)(main.screenWidthTiles/2 * main.tileSize - width/2),
+                            (int)(main.screenHeightTiles/2 * main.tileSize - (int) length/2), null);
     }
 }
 

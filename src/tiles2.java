@@ -50,7 +50,7 @@ public class tiles2 extends tiles{
                         tilesos.get(y).get(x).image = new ImageIcon("src/textures/fence2.png").getImage();
                         tilesos.get(y).get(x).blocktype = "fence1";
                     }
-                    brush.drawImage(tilesos.get(y).get(x).image, (int) ((x + -x_)* tileSize), (int) ((y + -y_) * tileSize), null);
+                    brush.drawImage(tilesos.get(y).get(x).image, (int) ((x + -x_)* main.tileSize), (int) ((y + -y_) * main.tileSize), null);
                     brush.setColor(Color.red);
                     brush.fillRect(x*15,y*15,15,15);
                 }
