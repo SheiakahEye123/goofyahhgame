@@ -55,7 +55,7 @@ public class Panel extends JPanel{
         super.paintComponent (g);
         brush = (Graphics2D) g;
 
-        // tiles.draw(g,tilesWithinScreen, player.x % 1, player.y % 1);
+        tiles.draw(g,tilesWithinScreen, playerOffsetX, playerOffsetY);
         tiles2.draws(g,tilesWithinScreen2, playerOffsetX, playerOffsetY);
         creature.draw(g,player.x, player.y);
         player.draw(g);
