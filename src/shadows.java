@@ -28,7 +28,7 @@ public class shadows {
         ypoints.add(0);
     }
 
-    public ArrayList<ray> rayCast(double startx, double starty, ArrayList<ArrayList<tile>> tiless, Graphics g, double dayTime) {
+    public ArrayList<ray> rayCast(double startx, double starty, ArrayList<ArrayList<tile>> tiless, Graphics g) {
         npoints = 0;
         int tilesize = 64;
         var sunRays = new ArrayList<ray>();
@@ -37,7 +37,7 @@ public class shadows {
         for (int y = 0; y < tiless.size(); y++) {
             for (int x = 0; x < tiless.get(y).size(); x++) {
                 if (tiless.get(y).get(x) != null) {
-                    var ray1 = new ray(startx, starty, x - smallnumber, y - smallnumber, 0);
+                    var ray1 = new ray(startx, starty, x- smallnumber, y - smallnumber, 0);
                     var ray2 = new ray(startx, starty, x + 1 + smallnumber, y - smallnumber, 0);
                     var ray3 = new ray(startx, starty, x + 1 + smallnumber, y + 1 + smallnumber, 0);
                     var ray4 = new ray(startx, starty, x - smallnumber, y + 1 + smallnumber, 0);
@@ -88,7 +88,7 @@ public class shadows {
             }
             if (ray != null) {
                 //npoints++;
-                //g.drawLine((int) ((ray.startx - startx) * tilesize + 960), (int) ((ray.starty - starty) * tilesize + 540), (int) ((ray.endx - startx) * tilesize + 960), (int) ((ray.endy - starty) * tilesize + 540));
+                //.drawLine((int) ((ray.startx - startx) * tilesize + 960), (int) ((ray.starty - starty) * tilesize + 540), (int) ((ray.endx - startx) * tilesize + 960), (int) ((ray.endy - starty) * tilesize + 540));
                 //g.drawLine((int) ((ray.startx - startx) * tilesize + (960 * dayTime)), (int) ((ray.starty - starty) * tilesize + (540 * dayTime)), (int) ((ray.endx - startx) * tilesize + 960), (int) ((ray.endy - starty) * tilesize + 540));
             }
         }

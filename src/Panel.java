@@ -34,16 +34,18 @@ public class Panel extends JPanel{
         creature.accelerate();
         creature.listener = player.listener;
 
-        player.x += player.velx;
-        player.y += player.vely;
+        var tilesWithinScreen = tiles.tilesWithinScreen(g, player.x, player.y);
+        var tilesWithinScreen2 = tiles2.tilesWithinScreen(g, player.x, player.y);
 
-        if (!tiles2.isCollided(player.x + player.velx, player.y, tiles2)) {
+        double playerOffsetX = (player.x % 1);
+        double playerOffsetY = (player.y % 1);
+
+        if (!tiles2.isCollided(15 + playerOffsetX + player.velx, 8.4375 + playerOffsetY, tilesWithinScreen2)) {
             player.x += player.velx;
             //System.out.println(tiles2.xadd + "/" + tiles2.yadd);
         }
-        if (!tiles2.isCollided(player.x, player.y + player.vely, tiles2)) {
+        if (!tiles2.isCollided(15 + playerOffsetX, 8.4375 + playerOffsetY + player.vely, tilesWithinScreen2)) {
             player.y += player.vely;
-
         }
 
         creature.x += creature.velx;
@@ -60,15 +62,12 @@ public class Panel extends JPanel{
         super.paintComponent (g);
         brush = (Graphics2D) g;
 
-        var tilesWithinScreen = tiles.tilesWithinScreen(g, player.x, player.y);
-        var tilesWithinScreen2 = tiles2.tilesWithinScreen(g, player.x, player.y);
-
         tiles.draw(g,tilesWithinScreen, player.x % 1, player.y % 1);
-        tiles2.draw(g,tilesWithinScreen2, player.x % 1, player.y % 1);
+        tiles2.draws(g,tilesWithinScreen2, player.x % 1, player.y % 1);
         creature.draw(g,player.x, player.y);
         player.draw(g);
 
-        var rays = shadows.rayCast(8.5,6, tilesWithinScreen, g, dayCycle.dayCounter%1);
+        var rays = shadows.rayCast(15 + playerOffsetX, 8.4375 + playerOffsetY, tilesWithinScreen2, g);
         //shadows.rayDraw(brush);
         //System.out.println(shadows.xpoints[1]);
 
@@ -91,22 +90,22 @@ public class Panel extends JPanel{
         xpoints[4] = 0;
         ypoints[4] = 0;
 
-        xpoints[5] = (int) ((rays.get(0).endx - player.x) * 64 + 960);
-        ypoints[5] = (int) ((rays.get(0).endy - player.y) * 64 + 540);
+        xpoints[5] = (int) ((rays.get(0).endx - rays.get(0).startx) * 64 + 960);
+        ypoints[5] = (int) ((rays.get(0).endy - rays.get(0).starty) * 64 + 540);
 
         for (int i = 6; i < rays.size() + 6; i++) {
-            xpoints[i] = (int) ((rays.get(i - 6).endx - player.x) * 64 + 960);
-            ypoints[i] = (int) ((rays.get(i - 6).endy - player.y) * 64 + 540);
+            xpoints[i] = (int) ((rays.get(i - 6).endx - rays.get(i - 6).startx) * 64 + 960);
+            ypoints[i] = (int) ((rays.get(i - 6).endy - rays.get(i - 6).starty) * 64 + 540);
         }
 
-        xpoints[rays.size() +  6] = (int) ((rays.get(0).endx - player.x) * 64 + 960);
-        ypoints[rays.size() + 6] = (int) ((rays.get(0).endy - player.y) * 64 + 540);
+        xpoints[rays.size() +  6] = (int) ((rays.get(0).endx - rays.get(0).startx) * 64 + 960);
+        ypoints[rays.size() + 6] = (int) ((rays.get(0).endy - rays.get(0).starty) * 64 + 540);
 
         //g.drawLine(xpoints[rays.size()], ypoints[rays.size()], xpoints[rays.size()+1],ypoints[rays.size()+1]);
 
         Color skycolor = dayCycle.setSkyColor();
 
-        brush.setColor(new Color(0,0,40, skycolor.getAlpha()));
+        brush.setColor(new Color(0,0,40, skycolor.getAlpha() + 100));
         brush.fillPolygon(xpoints, ypoints, rays.size() + 7);
         shadows.rayClear();
 
