@@ -3,4 +3,5 @@ public class shadow {
     int y;
     int len;
     int alpha;
+
 }

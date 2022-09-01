@@ -10,11 +10,9 @@ public class inventory {
     double vely;
     public inventory(double vely_, double velx_) {
         selecteditem = 0;
-        inv.add(new shotgun());
         velx = velx_;
         vely = vely_;
     }
-
 
     public void draw(Graphics g) {
         g.drawImage(quickbarimg, 960 - 128, 800,null);

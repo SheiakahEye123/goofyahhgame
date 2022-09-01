@@ -1,8 +1,5 @@
-import kotlin.Pair;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Player extends accelerate{
     int hp = 100;
@@ -11,7 +8,7 @@ public class Player extends accelerate{
     int sanity = 100;
     double x = 10;
     double y = 5;
-    inventory inventory = new inventory(vely, velx);
+    inventory inventory;
     Image sprite = new ImageIcon("src/textures/guy.png").getImage();
 
     public Player(Listener listener_) {
