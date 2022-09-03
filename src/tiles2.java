@@ -20,19 +20,15 @@ public class tiles2 extends tiles{
 //        }
 
         if (tileslist.get((int)(yadd - 0.45)).get((int)(xadd - 0.45)) != null) {
-
             return true;
         }
         if (tileslist.get((int)(yadd + 0.45)).get((int)(xadd + 0.45)) != null) {
-
             return true;
         }
         if (tileslist.get((int)(yadd - 0.45)).get((int)(xadd + 0.45)) != null) {
-
             return true;
         }
         if (tileslist.get((int)(yadd + 0.45)).get((int)(xadd - 0.45)) != null) {
-
             return true;
         }
         return false;

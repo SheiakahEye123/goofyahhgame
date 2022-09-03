@@ -1,29 +1,17 @@
-import java.awt.*;
-import java.util.ArrayList;
-
-public class bullet{
-    double dirx = 0;
-    double diry = 0;
+public class bullet {
+    double dirx;
+    double diry;
     double x;
     double y;
 
-    public bullet(double dirx_, double diry_) {
+    public bullet(double dirx_, double diry_, double x_, double y_) {
         dirx = dirx_;
         diry = diry_;
+        x = x_;
+        y = y_;
     }
 
+    public void shoot() {
 
-    public void shoot(Graphics g, ArrayList<ArrayList<tile>> tilesOnScreen) {
-        for (int y = 0; y < tilesOnScreen.size(); y++) {
-            for (int x = 0; x < tilesOnScreen.get(0).size(); x++) {
-                if (tilesOnScreen.get((int) (y)).get((int) (x)) != null) {
-                    dirx = 0;
-                    diry = 0;
-                }
-                x += dirx;
-                y += diry;
-            }
-        }
-        g.drawLine(960,540,(int)(x * 64),(int)(y * 64));
     }
 }

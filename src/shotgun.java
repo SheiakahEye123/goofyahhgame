@@ -9,9 +9,12 @@ public class shotgun extends item{
     }
 
     public void use() {
-        new bullet(0,0.1);
-        new bullet(0.1,0.1);
-        new bullet(-0.1,0.1);
+        var one = new bullet(0,0.1, 960, 540);
+        var two = new bullet(0.1,0.1, 960, 540);
+        var three = new bullet(-0.1,0.1, 960, 540);
+        one.shoot();
+        two.shoot();
+        three.shoot();
     }
 
 }
