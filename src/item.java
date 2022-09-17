@@ -6,4 +6,7 @@ public class item {
     item(Player player_){
         player = player_;
     }
+
+    public void use() {
+    }
 }
