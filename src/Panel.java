@@ -18,8 +18,10 @@ public class Panel extends JPanel{
 
     inventory inventory;
 
+    pathfinding pathfinding;
+
     Graphics2D brush;
-    public Panel(tiles tiles_, tiles2 tiles2_, Player player_, dayCycle dayCycle_, shadows shadows_, creature creature_, inventory inventory_) {
+    public Panel(tiles tiles_, tiles2 tiles2_, Player player_, dayCycle dayCycle_, shadows shadows_, creature creature_, inventory inventory_, pathfinding pathfinding_) {
         tiles = tiles_;
         player = player_;
         tiles2 = tiles2_;
@@ -27,6 +29,7 @@ public class Panel extends JPanel{
         shadows = shadows_;
         creature = creature_;
         inventory = inventory_;
+        pathfinding = pathfinding_;
     }
     public void paintComponent(Graphics g) {
         player.startFPS = System.nanoTime();
@@ -47,8 +50,8 @@ public class Panel extends JPanel{
             player.y += player.vely;
         }
 
-        creature.x += creature.velx;
-        creature.y += creature.vely;
+        creature.ex += creature.velx;
+        creature.ey += creature.vely;
 
         dayCycle.Clock();
         //panel.update(tiles, tiles2, Player, dayCycle);
@@ -57,9 +60,11 @@ public class Panel extends JPanel{
 
         tiles.draw(g,tilesWithinScreen, playerOffsetX, playerOffsetY);
         tiles2.draws(g,tilesWithinScreen2, playerOffsetX, playerOffsetY);
-        creature.pathfind(tilesWithinScreen2);
         creature.draw(g,player.x, player.y);
         player.draw(g);
+        pathfinding.pathfind((int) (player.x), (int) (player.y));
+
+        pathfinding.print();
         inventory.inv.get(0).use();
 
         var rays = shadows.rayCast(main.screenWidthTiles/2 + playerOffsetX,

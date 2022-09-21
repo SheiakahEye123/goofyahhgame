@@ -6,10 +6,12 @@ public class main {
     static int tileSize = 64;
     static double screenWidthTiles = 32;
     static double screenHeightTiles = 24;
+
     public static void main (String Args[]) {
         JFrame screen = new JFrame();
         Listener Listener = new Listener();
         Player Player = new Player(Listener);
+        pathfinding pathfinding = new pathfinding();
         inventory inventory = new inventory(Player.vely, Player.velx);
         Player.inventory = inventory;
         inventory.inv.add(new shotgun(Player));
@@ -27,7 +29,7 @@ public class main {
         dayCycle dayCycle = new dayCycle();
         shadows shadows = new shadows(dayCycle,tiles2);
         inventory.inv.get(0).player = Player;
-        var creature = new creature(tiles2,1,1,new ImageIcon("src/textures/guy.png").getImage(), Player.listener);
+        var creature = new creature(tiles2,6,16,new ImageIcon("src/textures/guy.png").getImage(), Player.listener);
         screen.addKeyListener(Listener);
         screen.setFocusable(true);
         screen.setFocusTraversalKeysEnabled(false);
@@ -38,7 +40,7 @@ public class main {
         //tiles2.tileslist2.get(1).set(1,null);
         //tiles2.tileslist2.get(1).set(0,null);
 
-        Panel panel = new Panel(tiles, tiles2, Player, dayCycle, shadows, creature, inventory);
+        Panel panel = new Panel(tiles, tiles2, Player, dayCycle, shadows, creature, inventory, pathfinding);
         panel.setSize(1920, 1080);
         screen.add(panel);
         panel.setDoubleBuffered(true);

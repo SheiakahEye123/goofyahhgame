@@ -83,7 +83,7 @@ public class shadows {
             }
             if (ray != null) {
                 //npoints++;
-                //.drawLine((int) ((ray.startx - startx) * tilesize + 960), (int) ((ray.starty - starty) * tilesize + 540), (int) ((ray.endx - startx) * tilesize + 960), (int) ((ray.endy - starty) * tilesize + 540));
+                //g.drawLine((int) ((ray.startx - startx) * 64 + 960), (int) ((ray.starty - starty) * 64 + 540), (int) ((ray.endx - startx) * 64 + 960), (int) ((ray.endy - starty) * 64 + 540));
                 //g.drawLine((int) ((ray.startx - startx) * tilesize + (960 * dayTime)), (int) ((ray.starty - starty) * tilesize + (540 * dayTime)), (int) ((ray.endx - startx) * tilesize + 960), (int) ((ray.endy - starty) * tilesize + 540));
             }
         }
