@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class Panel extends JPanel{
     tiles tiles;
@@ -18,10 +16,12 @@ public class Panel extends JPanel{
 
     inventory inventory;
 
-    pathfinding pathfinding;
+    Pathfinding pathfinding;
+
+    static long elapsedFrame,startFPS=System.nanoTime(),endFPS=System.nanoTime();
 
     Graphics2D brush;
-    public Panel(tiles tiles_, tiles2 tiles2_, Player player_, dayCycle dayCycle_, shadows shadows_, creature creature_, inventory inventory_, pathfinding pathfinding_) {
+    public Panel(tiles tiles_, tiles2 tiles2_, Player player_, dayCycle dayCycle_, shadows shadows_, creature creature_, inventory inventory_, Pathfinding pathfinding_) {
         tiles = tiles_;
         player = player_;
         tiles2 = tiles2_;
@@ -32,16 +32,15 @@ public class Panel extends JPanel{
         pathfinding = pathfinding_;
     }
     public void paintComponent(Graphics g) {
-        player.startFPS = System.nanoTime();
-        player.accelerate();
-        creature.accelerate();
-        creature.listener = player.listener;
+        startFPS = System.nanoTime();
+        player.accelerate(player.listener.w,player.listener.a,player.listener.s,player.listener.d,player.listener.jump);
+        //creature.listener = player.listener;
 
         var tilesWithinScreen = tiles.tilesWithinScreen(g, player.x, player.y);
         var tilesWithinScreen2 = tiles2.tilesWithinScreen(g, player.x, player.y);
 
         double playerOffsetX = player.x % 1;
-        double playerOffsetY = player.y % 1;
+        double playerOffsetY = (player.y - 0.7)% 1;
 
         if (!tiles2.isCollided(player.x + player.velx, player.y, tiles2.tileslist)) {
             player.x += player.velx;
@@ -60,11 +59,11 @@ public class Panel extends JPanel{
 
         tiles.draw(g,tilesWithinScreen, playerOffsetX, playerOffsetY);
         tiles2.draws(g,tilesWithinScreen2, playerOffsetX, playerOffsetY);
+        pathfinding.pathfind((int) (player.x), (int) (player.y));
+        creature.move(Pathfinding.intmap,(int) player.x,(int) player.y);
         creature.draw(g,player.x, player.y);
         player.draw(g);
-        pathfinding.pathfind((int) (player.x), (int) (player.y));
 
-        pathfinding.print();
         inventory.inv.get(0).use();
 
         var rays = shadows.rayCast(main.screenWidthTiles/2 + playerOffsetX,
@@ -122,8 +121,8 @@ public class Panel extends JPanel{
 
         //brush.fillRect(0,0,1920,1080);
         framesRendered += 1;
-        player.elapsedFrame = Math.abs(player.startFPS - player.endFPS);
-        player.endFPS = player.startFPS;
+        elapsedFrame = Math.abs(startFPS - endFPS);
+        endFPS = startFPS;
     }
 
 }

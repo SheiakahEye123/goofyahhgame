@@ -3,10 +3,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class pathfinding{
+public class Pathfinding {
     static ArrayList<ArrayList<Integer>> intmap = new ArrayList<ArrayList<Integer>>();
     static ArrayList<ArrayList<Character>> charmap = new ArrayList<ArrayList<Character>>();
     static ArrayList<ArrayList<Integer>> intmapcopy = new ArrayList<ArrayList<Integer>>();

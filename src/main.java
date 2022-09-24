@@ -1,17 +1,16 @@
 import javax.swing.*;
 import java.nio.file.Path;
-import java.util.ArrayList;
 
 public class main {
     static int tileSize = 64;
-    static double screenWidthTiles = 32;
-    static double screenHeightTiles = 24;
+    static double screenWidthTiles = 30;
+    static double screenHeightTiles = 16.875;
 
     public static void main (String Args[]) {
         JFrame screen = new JFrame();
         Listener Listener = new Listener();
         Player Player = new Player(Listener);
-        pathfinding pathfinding = new pathfinding();
+        Pathfinding pathfinding = new Pathfinding();
         inventory inventory = new inventory(Player.vely, Player.velx);
         Player.inventory = inventory;
         inventory.inv.add(new shotgun(Player));
@@ -29,7 +28,7 @@ public class main {
         dayCycle dayCycle = new dayCycle();
         shadows shadows = new shadows(dayCycle,tiles2);
         inventory.inv.get(0).player = Player;
-        var creature = new creature(tiles2,6,16,new ImageIcon("src/textures/guy.png").getImage(), Player.listener);
+        var creature = new creature(tiles2,7,8,new ImageIcon("src/textures/guy.png").getImage());
         screen.addKeyListener(Listener);
         screen.setFocusable(true);
         screen.setFocusTraversalKeysEnabled(false);

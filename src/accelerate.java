@@ -12,36 +12,33 @@ public class accelerate {
     double jumpacceleration;
     double veljump;
     double gravity = 0.0000005;
-    long startFPS;
-    long endFPS;
-    long elapsedFrame;
-    public void accelerate() {
+    public void accelerate(boolean w, boolean a, boolean s, boolean d, boolean jump) {
         accelerationx = 0;
         accelerationy = 0;
 
 
-        if (listener.w) {
+        if (w) {
             accelerationy = -1;
         }
-        if (listener.s) {
+        if (s) {
             accelerationy = 1;
         }
-        if (listener.d) {
+        if (d) {
             accelerationx = 1;
         }
-        if (listener.a) {
+        if (a) {
             accelerationx = -1;
         }
-        if (listener.jump && width <= 64 && length <= 64) {
+        if (jump && width <= 64 && length <= 64) {
             veljump = 3;
-            if (elapsedFrame != 0) {
-                gravity = 0.0000005 * (0.002 / (elapsedFrame / 10000.0));
+            if (Panel.elapsedFrame != 0) {
+                gravity = 0.0000005 * (0.002 / (Panel.elapsedFrame / 10000.0));
             }
             listener.jump = false;
         }
 
 
-        double elapsedTimeMultiplier = elapsedFrame / 0.0002;
+        double elapsedTimeMultiplier = Panel.elapsedFrame / 0.0002;
 
         if ((int) veljump != 0) {
             velx += (accelerationx * 1.5) * speed * elapsedTimeMultiplier;
@@ -56,7 +53,7 @@ public class accelerate {
         if (width >= 65 && length >= 65) {
             veljump -= gravity;
         }
-        if (elapsedFrame != 0) {
+        if (Panel.elapsedFrame != 0) {
             width += veljump;
             length += veljump;
         }
