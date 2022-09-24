@@ -40,7 +40,7 @@ public class Panel extends JPanel{
         var tilesWithinScreen2 = tiles2.tilesWithinScreen(g, player.x, player.y);
 
         double playerOffsetX = player.x % 1;
-        double playerOffsetY = (player.y - 0.7)% 1;
+        double playerOffsetY = (player.y + 0.5) % 1;
 
         if (!tiles2.isCollided(player.x + player.velx, player.y, tiles2.tileslist)) {
             player.x += player.velx;

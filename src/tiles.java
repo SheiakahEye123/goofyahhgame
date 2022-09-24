@@ -59,9 +59,9 @@ public class tiles {
     public ArrayList<ArrayList<tile>> tilesWithinScreen(Graphics g, double x, double y) {
         ArrayList<ArrayList<tile>> tilesOnScreen = new ArrayList<ArrayList<tile>>();
         double left = x - main.screenWidthTiles/2;
-        double right = x + main.screenWidthTiles/2 + 0.875;
-        double top = y - ((main.screenHeightTiles/2) - 0.875);
-        double bottom = y + ((main.screenHeightTiles/2) - 0.875);
+        double right = x + main.screenWidthTiles/2;
+        double top = y - main.screenHeightTiles/2;
+        double bottom = y + main.screenHeightTiles/2;
 
 
         for (double i = top; i < bottom; i++) {

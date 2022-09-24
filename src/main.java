@@ -4,7 +4,7 @@ import java.nio.file.Path;
 public class main {
     static int tileSize = 64;
     static double screenWidthTiles = 30;
-    static double screenHeightTiles = 16.875;
+    static double screenHeightTiles = 17;
 
     public static void main (String Args[]) {
         JFrame screen = new JFrame();
