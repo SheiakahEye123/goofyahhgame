@@ -33,7 +33,7 @@ public class Panel extends JPanel{
     }
     public void paintComponent(Graphics g) {
         startFPS = System.nanoTime();
-        player.accelerate(player.listener.w,player.listener.a,player.listener.s,player.listener.d,player.listener.jump);
+        player.accelerate(player.listener.w,player.listener.a,player.listener.s,player.listener.d,player.listener.jump,0.00000000000015);
         //creature.listener = player.listener;
 
         var tilesWithinScreen = tiles.tilesWithinScreen(g, player.x, player.y);
@@ -42,10 +42,10 @@ public class Panel extends JPanel{
         double playerOffsetX = player.x % 1;
         double playerOffsetY = (player.y + 0.5) % 1;
 
-        if (!tiles2.isCollided(player.x + player.velx, player.y, tiles2.tileslist)) {
+        if (!tiles2.isCollided(player.x + player.velx, player.y, tiles2.tileslist, 0.45, 0.45)) {
             player.x += player.velx;
         }
-        if (!tiles2.isCollided(player.x, player.y + player.vely, tiles2.tileslist)) {
+        if (!tiles2.isCollided(player.x, player.y + player.vely, tiles2.tileslist, 0.45, 0.45)) {
             player.y += player.vely;
         }
 

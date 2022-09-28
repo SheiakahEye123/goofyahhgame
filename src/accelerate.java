@@ -1,9 +1,8 @@
-public class accelerate {
+public class accelerate extends Collision{
     double velx = 0;
     double vely = 0;
     double width = 64;
     double length = 64;
-    double speed = 0.00000000000015;
     double friction = 0.90;
     Listener listener;
     double accelerationx;
@@ -12,7 +11,7 @@ public class accelerate {
     double jumpacceleration;
     double veljump;
     double gravity = 0.0000005;
-    public void accelerate(boolean w, boolean a, boolean s, boolean d, boolean jump) {
+    public void accelerate(boolean w, boolean a, boolean s, boolean d, boolean jump, double speed) {
         accelerationx = 0;
         accelerationy = 0;
 
