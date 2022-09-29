@@ -16,4 +16,10 @@ public class Collision {
         }
         return false;
     }
+    public boolean enemyCollided(double x, double y, double ex, double ey) {
+        if (Math.hypot(ex - x, ey - y) <= 0.1) {
+            return true;
+        }
+        return false;
+    }
 }

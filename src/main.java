@@ -13,7 +13,7 @@ public class main {
         Pathfinding pathfinding = new Pathfinding();
         inventory inventory = new inventory(Player.vely, Player.velx);
         Player.inventory = inventory;
-        inventory.inv.add(new shotgun(Player));
+        inventory.inv.add(new scythe(Player));
         tiles tiles = new tiles(Path.of("src/textures/map.txt"));
         tiles2 tiles2 = new tiles2(Path.of("src/textures/map2.txt"));
         screen.setSize(1920,1080);

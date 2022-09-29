@@ -8,6 +8,9 @@ public class creature extends accelerate{
     double ey;
     double speed = 0.000000000000015;
 
+    int width = 64;
+    int height = 64;
+
     tiles2 tiles2;
     Image image;
 
@@ -19,7 +22,7 @@ public class creature extends accelerate{
     }
 
     public void draw(Graphics g, double x_, double y_){
-        g.drawImage(image, (int) ((ex - x_) * 64 + 960), (int) ((ey - y_) * 64 + 540),null);
+        g.drawImage(image, (int) (((ex - x_) * 64 + 960) - width/2), (int) (((ey - y_) * 64 + 540) - height/2),null);
     }
     public void move(ArrayList<ArrayList<Integer>> intmap, int px, int py) {
         if (intmap.get((int) ey).get((int) ex) != intmap.get(py).get(px)) {

@@ -36,7 +36,7 @@ public class shadows {
         for (int y = 0; y < tiless.size(); y++) {
             for (int x = 0; x < tiless.get(y).size(); x++) {
                 if (tiless.get(y).get(x) != null) {
-                    var ray1 = new ray(startx, starty, x- smallnumber, y - smallnumber, 0);
+                    var ray1 = new ray(startx, starty, x - smallnumber, y - smallnumber, 0);
                     var ray2 = new ray(startx, starty, x + 1 + smallnumber, y - smallnumber, 0);
                     var ray3 = new ray(startx, starty, x + 1 + smallnumber, y + 1 + smallnumber, 0);
                     var ray4 = new ray(startx, starty, x - smallnumber, y + 1 + smallnumber, 0);

@@ -64,7 +64,7 @@ public class Panel extends JPanel{
         creature.draw(g,player.x, player.y);
         player.draw(g);
 
-        inventory.inv.get(0).use();
+        player.inventory.inv.get(0).use(player.listener.e);
 
         var rays = shadows.rayCast(main.screenWidthTiles/2 + playerOffsetX,
                                                main.screenHeightTiles/2 + playerOffsetY,
