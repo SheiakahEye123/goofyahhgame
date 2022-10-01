@@ -5,11 +5,12 @@ public class main {
     static int tileSize = 64;
     static double screenWidthTiles = 30;
     static double screenHeightTiles = 17;
+    static Player Player;
 
     public static void main (String Args[]) {
         JFrame screen = new JFrame();
         Listener Listener = new Listener();
-        Player Player = new Player(Listener);
+        Player = new Player(Listener);
         Pathfinding pathfinding = new Pathfinding();
         tiles tiles = new tiles(Path.of("src/textures/map.txt"));
         tiles2 tiles2 = new tiles2(Path.of("src/textures/map2.txt"));
