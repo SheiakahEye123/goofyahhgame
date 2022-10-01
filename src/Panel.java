@@ -21,14 +21,13 @@ public class Panel extends JPanel{
     static long elapsedFrame,startFPS=System.nanoTime(),endFPS=System.nanoTime();
 
     Graphics2D brush;
-    public Panel(tiles tiles_, tiles2 tiles2_, Player player_, dayCycle dayCycle_, shadows shadows_, creature creature_, inventory inventory_, Pathfinding pathfinding_) {
+    public Panel(tiles tiles_, tiles2 tiles2_, Player player_, dayCycle dayCycle_, shadows shadows_, creature creature_, Pathfinding pathfinding_) {
         tiles = tiles_;
         player = player_;
         tiles2 = tiles2_;
         dayCycle = dayCycle_;
         shadows = shadows_;
         creature = creature_;
-        inventory = inventory_;
         pathfinding = pathfinding_;
     }
     public void paintComponent(Graphics g) {
@@ -64,7 +63,7 @@ public class Panel extends JPanel{
         creature.draw(g,player.x, player.y);
         player.draw(g);
 
-        player.inventory.inv.get(0).use(player.listener.e);
+        player.inventory.inv.get(0).use(player.listener.e, g, tilesWithinScreen2);
 
         var rays = shadows.rayCast(main.screenWidthTiles/2 + playerOffsetX,
                                                main.screenHeightTiles/2 + playerOffsetY,

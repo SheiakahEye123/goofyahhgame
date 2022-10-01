@@ -11,9 +11,6 @@ public class main {
         Listener Listener = new Listener();
         Player Player = new Player(Listener);
         Pathfinding pathfinding = new Pathfinding();
-        inventory inventory = new inventory(Player.vely, Player.velx);
-        Player.inventory = inventory;
-        inventory.inv.add(new scythe(Player));
         tiles tiles = new tiles(Path.of("src/textures/map.txt"));
         tiles2 tiles2 = new tiles2(Path.of("src/textures/map2.txt"));
         screen.setSize(1920,1080);
@@ -27,7 +24,7 @@ public class main {
 
         dayCycle dayCycle = new dayCycle();
         shadows shadows = new shadows(dayCycle,tiles2);
-        inventory.inv.get(0).player = Player;
+        Player.inventory.inv.get(0).player = Player;
         var creature = new creature(tiles2,7,8,new ImageIcon("src/textures/guy.png").getImage());
         screen.addKeyListener(Listener);
         screen.setFocusable(true);
@@ -39,7 +36,7 @@ public class main {
         //tiles2.tileslist2.get(1).set(1,null);
         //tiles2.tileslist2.get(1).set(0,null);
 
-        Panel panel = new Panel(tiles, tiles2, Player, dayCycle, shadows, creature, inventory, pathfinding);
+        Panel panel = new Panel(tiles, tiles2, Player, dayCycle, shadows, creature, pathfinding);
         panel.setSize(1920, 1080);
         screen.add(panel);
         panel.setDoubleBuffered(true);

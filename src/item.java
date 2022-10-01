@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 
 public class item extends Collision{
     Image img;
@@ -9,11 +10,14 @@ public class item extends Collision{
         player = player_;
     }
 
-    public void use(boolean trigger) {
+    public item() {
 
     }
 
     public String type() {
         return name;
+    }
+
+    public void use(boolean e, Graphics g, ArrayList<ArrayList<tile>> tilesOnScreen) {
     }
 }

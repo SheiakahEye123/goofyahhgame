@@ -1,4 +1,4 @@
-public class bullet {
+public class bullet extends Collision{
     double x;
     double y;
 

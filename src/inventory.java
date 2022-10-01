@@ -6,12 +6,8 @@ public class inventory {
     ArrayList<item> inv = new ArrayList<item>();
     Image quickbarimg = new ImageIcon("src/textures/quickbar.png").getImage();
     int selecteditem;
-    double velx;
-    double vely;
-    public inventory(double vely_, double velx_) {
+    public inventory() {
         selecteditem = 0;
-        velx = velx_;
-        vely = vely_;
     }
 
     public void draw(Graphics g) {

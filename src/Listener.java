@@ -44,6 +44,7 @@ public class Listener extends JPanel implements KeyListener, MouseListener, Acti
         }
         if (c == KeyEvent.VK_E) {
             e = true;
+            System.out.println("jer");
         }
         if (c == KeyEvent.VK_SPACE) {
             jump = true;

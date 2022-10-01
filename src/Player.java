@@ -8,12 +8,13 @@ public class Player extends accelerate{
     int sanity = 100;
     double x = 10;
     double y = 5;
-    inventory inventory;
+    inventory inventory = new inventory();
     Image sprite = new ImageIcon("src/textures/guy.png").getImage();
 
     public Player(Listener listener_) {
         listener = listener_;
         int hp = 100;
+        inventory.inv.add(new scythe());
     }
 
     public void draw(Graphics g) {
