@@ -1,4 +1,4 @@
-public class accelerate extends Collision{
+public class accelerate{
     double velx = 0;
     double vely = 0;
     double width = 64;

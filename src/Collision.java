@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Collision {
+public class Collision extends accelerate{
     public boolean isCollided(double xadd, double yadd, ArrayList<ArrayList<tile>> tilesonscreen, double hitboxX, double hitboxY) {
         if (tilesonscreen.get((int)(yadd - hitboxY)).get((int)(xadd - hitboxX)) != null) {
             return true;

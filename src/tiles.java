@@ -49,7 +49,7 @@ public class tiles extends Collision{
         for (int y = 0; y < tilesToDraw.size(); y++) {
             for (int x = 0; x < tilesToDraw.get(y).size(); x++) {
                 if (tilesToDraw.get(y).get(x) != null) {
-                    brush.drawImage(tilesToDraw.get(y).get(x).image, (int) ((x + -x_) * main.tileSize), (int) ((y + -y_) * main.tileSize), null);
+                    brush.drawImage(tilesToDraw.get(y).get(x).image, (int) ((x + -x_) * WorldState.tileSize), (int) ((y + -y_) * WorldState.tileSize), null);
                     brush.setColor(tilesToDraw.get(y).get(x).color);
                     brush.fillRect(x*15,y*15,15,15);
                 }
@@ -58,16 +58,16 @@ public class tiles extends Collision{
     }
     public ArrayList<ArrayList<tile>> tilesWithinScreen(Graphics g, double x, double y) {
         ArrayList<ArrayList<tile>> tilesOnScreen = new ArrayList<ArrayList<tile>>();
-        double left = x - main.screenWidthTiles/2;
-        double right = x + main.screenWidthTiles/2;
-        double top = y - main.screenHeightTiles/2;
-        double bottom = y + main.screenHeightTiles/2;
+        double left = x - WorldState.screenWidthTiles/2;
+        double right = x + WorldState.screenWidthTiles/2;
+        double top = y - WorldState.screenHeightTiles/2;
+        double bottom = y + WorldState.screenHeightTiles/2;
 
 
         for (double i = top; i < bottom; i++) {
             if (i < 0 || i >= tileslist.size()) {
                 var ylist = new ArrayList<tile>();
-                for (int e = 0; e < main.screenWidthTiles; e++) {
+                for (int e = 0; e < WorldState.screenWidthTiles; e++) {
                     ylist.add(null);
                 }
                 tilesOnScreen.add(ylist);

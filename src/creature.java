@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.util.ArrayList;
 
-public class creature extends accelerate{
+public class creature extends Collision{
     double health;
     double dmg;
     double ex;

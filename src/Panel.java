@@ -18,17 +18,20 @@ public class Panel extends JPanel{
 
     Pathfinding pathfinding;
 
+    WorldState worldstate;
+
     static long elapsedFrame,startFPS=System.nanoTime(),endFPS=System.nanoTime();
 
     Graphics2D brush;
-    public Panel(tiles tiles_, tiles2 tiles2_, Player player_, dayCycle dayCycle_, shadows shadows_, creature creature_, Pathfinding pathfinding_) {
-        tiles = tiles_;
-        player = player_;
-        tiles2 = tiles2_;
-        dayCycle = dayCycle_;
-        shadows = shadows_;
-        creature = creature_;
-        pathfinding = pathfinding_;
+    public Panel(WorldState worldstate) {
+        tiles = worldstate.tiles;
+        player = worldstate.Player;
+        tiles2 = worldstate.tiles2;
+        dayCycle = worldstate.dayCycle;
+        shadows = worldstate.shadows;
+        creature = worldstate.creature;
+        pathfinding = worldstate.pathfinding;
+        this.worldstate = worldstate;
     }
     public void paintComponent(Graphics g) {
         startFPS = System.nanoTime();
@@ -63,10 +66,18 @@ public class Panel extends JPanel{
         creature.draw(g,player.x, player.y);
         player.draw(g);
 
-        player.inventory.inv.get(0).use(player.listener.e, g, tilesWithinScreen2);
+        for (bullet b : worldstate.bullets) {
+            b.draw(worldstate,g);
+        }
 
-        var rays = shadows.rayCast(main.screenWidthTiles/2 + playerOffsetX,
-                                               main.screenHeightTiles/2 + playerOffsetY,
+        for (item i : player.inventory.inv) {
+            i.use(player.listener.e, g, tilesWithinScreen2, worldstate);
+        }
+        //player.inventory.inv.get(0).use(player.listener.e, g, tilesWithinScreen2);
+        //System.out.println(player.inventory.inv);
+
+        var rays = shadows.rayCast(WorldState.screenWidthTiles/2 + playerOffsetX,
+                WorldState.screenHeightTiles/2 + playerOffsetY,
                                                 tilesWithinScreen2, g);
 
         // shift all X and Y points in ray by playerOffset
