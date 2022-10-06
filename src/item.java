@@ -5,6 +5,8 @@ public class item extends Collision{
     Image img;
     Player player;
 
+    long time;
+
     String name;
     item(Player player_){
         player = player_;
