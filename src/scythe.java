@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class scythe extends item{
     long time;
-    long time1;
+    long timeatlastuse;
     public scythe() {
         super();
         img = new ImageIcon("src/textures/scythe.png").getImage();
@@ -13,47 +13,22 @@ public class scythe extends item{
     }
 
     public void use(boolean trigger, Graphics g, ArrayList<ArrayList<tile>> tilesOnScreen, WorldState worldstate) {
-        time1 = System.nanoTime();
-        if (true) {
-            System.out.println("e");
+        if (cooldown(0)) {
             if (trigger) {
-                bullet leadBullet = new bullet(worldstate.Player.x - 1.25, worldstate.Player.y, 12, 0.1, false, "bleed");
-
-                double targetX = worldstate.Player.x + 1.25;
-                double targetY = worldstate.Player.y - 1;
-                worldstate.bullets.add(leadBullet);
-                if (leadBullet.x > targetX) {
-                    leadBullet.accelerate(false,true,false,false, false,0.0000000000003);
-                    worldstate.bullets.add(new bullet(leadBullet.x, leadBullet.y, 12, 0.1, false, "bleed"));
-                }
-                if (leadBullet.x < targetX) {
-                    leadBullet.accelerate(false,false,false,true, false,0.0000000000003);
-                    worldstate.bullets.add(new bullet(leadBullet.x, leadBullet.y, 12, 0.1, false, "bleed"));
-                }
-                if (leadBullet.y < targetY) {
-                    leadBullet.accelerate(false,false,true,false, false,0.0000000000003);
-                    worldstate.bullets.add(new bullet(leadBullet.x, leadBullet.y, 12, 0.1, false, "bleed"));
-                }
-                if (leadBullet.y > targetY) {
-                    leadBullet.accelerate(true,false,false,false, false,0.0000000000003);
-                    worldstate.bullets.add(new bullet(leadBullet.x, leadBullet.y, 12, 0.1, false, "bleed"));
-                }
-
+                Point p = WorldState.getMouseLocation();
+                double bvely = p.y - 540;
+                double bvelx = p.x - 960;
+                double dist = (Math.hypot(540 - p.x,960 - p.y)) * 10;
+                worldstate.bullets.add(new bullet(worldstate.Player.x,worldstate.Player.y,12, 0.1, true, "bleed", bvelx/dist, bvely/dist));
+                timeatlastuse = System.nanoTime();
             }
-            for (int b = 0; b < worldstate.bullets.size(); b++) {
-                g.drawRect((int) ((worldstate.bullets.get(b).x * 64 + 960)), (int) ((worldstate.bullets.get(b).y) * 64 + 540),10,10);
-            }
-            time = System.nanoTime();
         }
     }
 
-    public boolean cooldown(double s) {
-        if ((time - time1) >= s) {
+    public boolean cooldown(double seconds) {
+        if (((System.nanoTime()-timeatlastuse)/1000000000.0) >= seconds) {
             return true;
         }
         return false;
     }
-
-
-
 }

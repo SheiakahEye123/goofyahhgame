@@ -66,13 +66,14 @@ public class Panel extends JPanel{
         creature.draw(g,player.x, player.y);
         player.draw(g);
 
-        for (bullet b : worldstate.bullets) {
-            b.draw(worldstate,g);
-        }
-
         for (item i : player.inventory.inv) {
             i.use(player.listener.e, g, tilesWithinScreen2, worldstate);
         }
+        for (bullet b : worldstate.bullets) {
+            b.draw(worldstate,g);
+            b.bulletMotion(worldstate);
+        }
+
         //player.inventory.inv.get(0).use(player.listener.e, g, tilesWithinScreen2);
         //System.out.println(player.inventory.inv);
 

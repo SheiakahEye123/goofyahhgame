@@ -1,8 +1,10 @@
 import javax.swing.*;
+import java.awt.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class WorldState {
+
     static int tileSize = 64;
 
     static double screenWidthTiles = 30;
@@ -26,4 +28,10 @@ public class WorldState {
     creature creature = new creature(tiles2,7,8,new ImageIcon("src/textures/guy.png").getImage());
 
     ArrayList<bullet> bullets = new ArrayList<>();
+
+    public static Point getMouseLocation(){
+        int x = MouseInfo.getPointerInfo().getLocation().x - main.screen.getLocation().x;
+        int y = MouseInfo.getPointerInfo().getLocation().y - main.screen.getLocation().y;
+        return new Point(x,y);
+    }
 }
