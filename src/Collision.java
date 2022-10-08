@@ -20,10 +20,10 @@ public class Collision extends accelerate{
 
         return false;
     }
-    public boolean enemyCollided(double x, double y, double ex, double ey, double size) {
-        if (Math.hypot(ex - x, ey - y) <= size) {
-            return true;
+    public creature enemyCollided(double x, double y, creature creature, double size) {
+        if (Math.hypot(creature.ex - x, creature.ey - y) <= size) {
+            return creature;
         }
-        return false;
+        return null;
     }
 }

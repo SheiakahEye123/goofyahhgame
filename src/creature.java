@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class creature extends Collision{
-    double health;
+    double health = 100;
     double dmg;
     double ex;
     double ey;
@@ -69,4 +69,5 @@ public class creature extends Collision{
             accelerate(false, false, false, false, false,speed);
         }
     }
+
 }

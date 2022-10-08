@@ -25,7 +25,8 @@ public class WorldState {
 
     shadows shadows = new shadows(dayCycle,tiles2);
 
-    creature creature = new creature(tiles2,7,8,new ImageIcon("src/textures/guy.png").getImage());
+
+    ArrayList<creature> creatures = new ArrayList<creature>();
 
     ArrayList<bullet> bullets = new ArrayList<>();
 

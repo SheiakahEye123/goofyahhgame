@@ -26,9 +26,7 @@ public class bullet extends Collision{
         g.drawRect((int) ((x - worldstate.Player.x) * WorldState.tileSize + 960), (int) ((y - worldstate.Player.y) * WorldState.tileSize + 540), 10, 10);
     }
     public void bulletMotion(WorldState worldstate) {
-        if (!isCollided(x, y, worldstate.tiles2.tileslist,0.1,0.1)) {
-            x += velx;
-            y += vely;
-        }
+        x += velx;
+        y += vely;
     }
 }

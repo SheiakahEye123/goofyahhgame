@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Panel extends JPanel{
     tiles tiles;
@@ -11,8 +12,6 @@ public class Panel extends JPanel{
     dayCycle dayCycle;
 
     static int framesRendered;
-
-    creature creature;
 
     inventory inventory;
 
@@ -29,7 +28,6 @@ public class Panel extends JPanel{
         tiles2 = worldstate.tiles2;
         dayCycle = worldstate.dayCycle;
         shadows = worldstate.shadows;
-        creature = worldstate.creature;
         pathfinding = worldstate.pathfinding;
         this.worldstate = worldstate;
     }
@@ -51,28 +49,44 @@ public class Panel extends JPanel{
             player.y += player.vely;
         }
 
-        creature.ex += creature.velx;
-        creature.ey += creature.vely;
-
         dayCycle.Clock();
         //panel.update(tiles, tiles2, Player, dayCycle);
         super.paintComponent (g);
         brush = (Graphics2D) g;
 
+
+        if (dayCycle.timeOfDay >= 0.8 && Math.random() <= 0.0000003 * Panel.elapsedFrame) {
+            creature creatureToAdd = new creature(tiles2,
+                    (int) (tiles.tileslist.get(0).size() * Math.random()),
+                    (int) (tiles.tileslist.size() * Math.random()),
+                    new ImageIcon("src/textures/guy.png").getImage());
+            if (!tiles2.isCollided(creatureToAdd.ex, creatureToAdd.ey, tiles2.tileslist, 0.45, 0.45)) {
+                worldstate.creatures.add(creatureToAdd);
+            }
+        }
         tiles.draw(g,tilesWithinScreen, playerOffsetX, playerOffsetY);
         tiles2.draws(g,tilesWithinScreen2, playerOffsetX, playerOffsetY);
         pathfinding.pathfind((int) (player.x), (int) (player.y));
-        creature.move(Pathfinding.intmap,(int) player.x,(int) player.y);
-        creature.draw(g,player.x, player.y);
         player.draw(g);
+        for(creature creature : worldstate.creatures) {
+            creature.ex += creature.velx;
+            creature.ey += creature.vely;
+            creature.move(Pathfinding.intmap,(int) player.x,(int) player.y);
+            creature.draw(g,player.x, player.y);
+        }
 
         for (item i : player.inventory.inv) {
             i.use(player.listener.e, g, tilesWithinScreen2, worldstate);
         }
-        for (bullet b : worldstate.bullets) {
-            b.draw(worldstate,g);
-            b.bulletMotion(worldstate);
+        ArrayList<bullet> index = new ArrayList<bullet>();
+        for (int b = 0; b < worldstate.bullets.size(); b++) {
+            worldstate.bullets.get(b).draw(worldstate,g);
+            worldstate.bullets.get(b).bulletMotion(worldstate);
+            if (!worldstate.bullets.get(b).isCollided(worldstate.bullets.get(b).x,worldstate.bullets.get(b).y,tiles2.tileslist,0.1,0.1)) {
+                index.add(worldstate.bullets.get(b));
+            }
         }
+        worldstate.bullets = index;
 
         //player.inventory.inv.get(0).use(player.listener.e, g, tilesWithinScreen2);
         //System.out.println(player.inventory.inv);

@@ -16,10 +16,10 @@ public class scythe extends item{
         if (cooldown(0)) {
             if (trigger) {
                 Point p = WorldState.getMouseLocation();
-                double bvely = p.y - 540;
+                double bvely = p.y - 572;
                 double bvelx = p.x - 960;
-                double dist = (Math.hypot(540 - p.x,960 - p.y)) * 10;
-                worldstate.bullets.add(new bullet(worldstate.Player.x,worldstate.Player.y,12, 0.1, true, "bleed", bvelx/dist, bvely/dist));
+                double dist = (Math.hypot(960 - p.x,572 - p.y)) * 10;
+                worldstate.bullets.add(new bullet(worldstate.Player.x - 0.05,worldstate.Player.y - 0.05,12, 0.1, true, "bleed", bvelx/dist, bvely/dist));
                 timeatlastuse = System.nanoTime();
             }
         }
