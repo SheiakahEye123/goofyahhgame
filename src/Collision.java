@@ -26,4 +26,8 @@ public class Collision extends accelerate{
         }
         return null;
     }
+
+    public void quadTree() {
+
+    }
 }
