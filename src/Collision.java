@@ -21,7 +21,7 @@ public class Collision extends accelerate{
         return false;
     }
     public creature enemyCollided(double x, double y, creature creature, double size) {
-        if (Math.hypot(creature.ex - x, creature.ey - y) <= size) {
+        if (Math.hypot(creature.x - x, creature.y - y) <= size) {
             return creature;
         }
         return null;

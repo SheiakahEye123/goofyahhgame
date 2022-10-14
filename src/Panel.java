@@ -60,7 +60,7 @@ public class Panel extends JPanel{
                     (int) (tiles.tileslist.get(0).size() * Math.random()),
                     (int) (tiles.tileslist.size() * Math.random()),
                     new ImageIcon("src/textures/guy.png").getImage());
-            if (!tiles2.isCollided(creatureToAdd.ex, creatureToAdd.ey, tiles2.tileslist, 0.45, 0.45)) {
+            if (!tiles2.isCollided(creatureToAdd.x, creatureToAdd.y, tiles2.tileslist, 0.45, 0.45)) {
                 worldstate.creatures.add(creatureToAdd);
             }
         }
@@ -69,8 +69,8 @@ public class Panel extends JPanel{
         pathfinding.pathfind((int) (player.x), (int) (player.y));
         player.draw(g);
         for(creature creature : worldstate.creatures) {
-            creature.ex += creature.velx;
-            creature.ey += creature.vely;
+            creature.x += creature.velx;
+            creature.y += creature.vely;
             creature.move(Pathfinding.intmap,(int) player.x,(int) player.y);
             creature.draw(g,player.x, player.y);
         }
