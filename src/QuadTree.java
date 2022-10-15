@@ -1,11 +1,17 @@
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 class Node {
     int x,y;
     Object obj;
-    public void Node(Object obj_) {
+    public Node(Object obj_) {
         obj = obj_;
     }
     public int getX() {
@@ -85,11 +91,23 @@ public class QuadTree {
     QuadTree southEast = null;
     Boundry boundry;
 
-    QuadTree(int level, Boundry boundry,     ArrayList<creature> creatures_,ArrayList<bullet> bullets_) {
+    QuadTree(int level, Boundry boundry) {
         this.level = level;
         this.boundry = boundry;
-        creatures = creatures_;
-        bullets = bullets_;
+    }
+
+    public static void main(String[] args) throws IOException {
+        Double[] xCoords = new Double[1000];
+        Double[] yCoords = new Double[1000];
+        for (int i = 0; i < 1000; i++) {
+            xCoords[i] = Math.random() * 1000;
+            yCoords[i] = Math.random() * 1000;
+        }
+        var tree = new QuadTree(0,new Boundry(0,0,1000,1000));
+        for (int i = 0; i < 1000; i++) {
+            tree.insert(new Node(new bullet(xCoords[i],yCoords[i],0,0,false,"",0,0)));
+        }
+        QuadTreeVisualizer.drawQuadTree(tree, "goofyahhgame/src/img.png");
     }
 
     void split() {
@@ -100,14 +118,14 @@ public class QuadTree {
 
         northWest = new QuadTree(this.level + 1, new Boundry(
                 this.boundry.getxMin(), this.boundry.getyMin(), xOffset,
-                yOffset), creatures, bullets);
+                yOffset));
         northEast = new QuadTree(this.level + 1, new Boundry(xOffset,
-                this.boundry.getyMin(), xOffset, yOffset), creatures, bullets);
+                this.boundry.getyMin(), xOffset, yOffset));
         southWest = new QuadTree(this.level + 1, new Boundry(
                 this.boundry.getxMin(), xOffset, xOffset,
-                this.boundry.getyMax()), creatures, bullets);
+                this.boundry.getyMax()));
         southEast = new QuadTree(this.level + 1, new Boundry(xOffset, yOffset,
-                this.boundry.getxMax(), this.boundry.getyMax()), creatures, bullets);
+                this.boundry.getxMax(), this.boundry.getyMax()));
 
     }
 
@@ -135,5 +153,89 @@ public class QuadTree {
             this.southEast.insert(node);
         else
             System.out.printf("ERROR : Unhandled partition %d %d", node.getX(), node.getY());
+    }
+}
+
+ class QuadTreeVisualizer
+{
+    public static <V> void drawQuadTree(QuadTree tree, String file)
+            throws IOException
+    {
+
+        Rectangle rect = new Rectangle(tree.boundry.getxMin(), tree.boundry.getyMin(), tree.boundry.getxMax() - tree.boundry.getxMin(), tree.boundry.getyMax() - tree.boundry.getyMin());
+
+        int s = 5;
+        int w = s*(int)rect.getWidth();
+        int h = s*(int)rect.getHeight();
+
+
+        BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+
+        Set<Rectangle> inserted = drawSector(tree, image, w, h, s, 0);
+
+        Graphics2D graphics = image.createGraphics();
+        /*graphics.setColor(Color.WHITE);
+        graphics.fillRect(0, 0, w, h);*/
+
+        graphics.setColor(Color.BLUE);
+        graphics.drawLine(w/2, 0, w/2, h);
+        graphics.drawLine(0, h/2, w, h/2);
+
+        for (Rectangle valueRect : inserted) {
+            //System.out.println(valueRect);
+            graphics.setColor(Color.RED);
+            graphics.drawRect((int) (h/2 - s*rect.getX()), (int) (h/2 - s*rect.getY()),
+                    s*(int)valueRect.getWidth(), s*(int)valueRect.getHeight());
+
+            /*graphics.drawString(valueRect.tl.toString(),
+                w/2 + s*(valueRect.tl.x - 7), h/2 - s*(valueRect.tl.y - 1));
+            graphics.drawString(valueRect.tr.toString(),
+                w/2 + s*(valueRect.tr.x + 1), h/2 - s*(valueRect.tr.y - 1));
+
+            graphics.drawString(valueRect.bl.toString(),
+                w/2 + s*(valueRect.bl.x - 7), h/2 - s*(valueRect.bl.y - 1));
+            graphics.drawString(valueRect.br.toString(),
+                w/2 + s*(valueRect.br.x + 1), h/2 - s*(valueRect.br.y - 1));*/
+        }
+
+        graphics.dispose();
+
+        ImageIO.write(image, "png", new File(file));
+        System.out.println("s");
+    }
+
+    public static <V> Set<Rectangle> drawSector(QuadTree node, BufferedImage image, int w, int h, int s, int d)
+    {
+        if (node == null) {
+            return new HashSet<Rectangle>();
+        }
+        Set<Rectangle> result = new HashSet<Rectangle>();
+
+        Graphics2D graphics = image.createGraphics();
+
+        Rectangle rect = new Rectangle(node.boundry.getxMin(), node.boundry.getyMin(), node.boundry.getxMax() - node.boundry.getxMin(), node.boundry.getyMax() - node.boundry.getyMin());
+        graphics.setColor(new Color(255,255,255));
+        graphics.fillRect((int) (w/2 + s*rect.getX()), (int) (h/2 - s*rect.getY()),
+                s*(int)rect.getWidth(), s*(int)rect.getHeight());
+
+        graphics.setColor(new Color(d*20,d*20,d*20));
+        graphics.drawRect((int) (w/2 + s*rect.getX()), (int) (h/2 - s*rect.getY()),
+                s*(int)rect.getWidth(), s*(int)rect.getHeight());
+
+        Rectangle valueRect = new Rectangle(node.boundry.getxMin(), node.boundry.getyMin(), node.boundry.getxMax() - node.boundry.getxMin(), node.boundry.getyMax() - node.boundry.getyMin());
+        if (valueRect != null) {
+            result.add(valueRect);
+        }
+
+        graphics.dispose();
+
+        if (node.northWest != null) {
+            result.addAll(drawSector(node.northWest, image, w, h, s, d+1));
+            result.addAll(drawSector(node.northEast, image, w, h, s, d+1));
+            result.addAll(drawSector(node.southWest, image, w, h, s, d+1));
+            result.addAll(drawSector(node.southEast, image, w, h, s, d+1));
+        }
+        System.out.println(node.level);
+        return result;
     }
 }

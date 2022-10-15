@@ -26,6 +26,7 @@ public class WorldState {
     shadows shadows = new shadows(dayCycle,tiles2);
 
 
+
     ArrayList<creature> creatures = new ArrayList<creature>();
 
     ArrayList<bullet> bullets = new ArrayList<>();
