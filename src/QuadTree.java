@@ -100,8 +100,8 @@ public class QuadTree {
         Double[] xCoords = new Double[1000];
         Double[] yCoords = new Double[1000];
         for (int i = 0; i < 1000; i++) {
-            xCoords[i] = Math.random() * 1000;
-            yCoords[i] = Math.random() * 1000;
+            xCoords[i] = Math.pow(Math.random(), 2) * 1000;
+            yCoords[i] = Math.pow(Math.random(), 2) * 1000;
         }
         var tree = new QuadTree(0,new Boundry(0,0,1000,1000));
         for (int i = 0; i < 1000; i++) {
@@ -126,9 +126,7 @@ public class QuadTree {
         northWest = new QuadTree(this.level + 1, new Boundry(this.boundry.getxMin(), this.boundry.getyMin(), xOffset, yOffset));
         northEast = new QuadTree(this.level + 1, new Boundry(xOffset, this.boundry.getyMin(), this.boundry.getxMax(), yOffset));
         southWest = new QuadTree(this.level + 1, new Boundry(this.boundry.getxMin(), yOffset, xOffset, this.boundry.getyMax()));
-        southEast = new QuadTree(this.level + 1, new Boundry(xOffset, yOffset, this.boundry.getxMax(), this.boundry.getyMax()));
-        System.out.println("sdh");
-    }
+        southEast = new QuadTree(this.level + 1, new Boundry(xOffset, yOffset, this.boundry.getxMax(), this.boundry.getyMax()));}
 
     void insert(Node node) {
         if (!this.boundry.inRange(node.getX(), node.getY())) {
@@ -172,22 +170,13 @@ public class QuadTree {
 
         BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
 
-        Set<Rectangle> inserted = drawSector(tree, image, w, h, s, 0);
-
         Graphics2D graphics = image.createGraphics();
+
+        // fill entire image
         graphics.setColor(Color.WHITE);
         graphics.fillRect(0, 0, w, h);
 
-        graphics.setColor(Color.BLUE);
-        graphics.drawLine(w/2, 0, w/2, h);
-        graphics.drawLine(0, h/2, w, h/2);
-
-        for (Rectangle valueRect : inserted) {
-            //System.out.println(valueRect);
-            graphics.setColor(Color.RED);
-            graphics.drawRect((int) (h/2 - s*rect.getX()), (int) (h/2 - s*rect.getY()),
-                    s*(int)valueRect.getWidth(), s*(int)valueRect.getHeight());
-        }
+        drawSector(tree, image, w, h, s, 0);
 
         graphics.dispose();
         return image;
@@ -203,7 +192,7 @@ public class QuadTree {
         Graphics2D graphics = image.createGraphics();
 
         Rectangle rect = new Rectangle(node.boundry.getxMin(), node.boundry.getyMin(), node.boundry.getxMax() - node.boundry.getxMin(), node.boundry.getyMax() - node.boundry.getyMin());
-        graphics.setColor(new Color(255,20,10));
+        graphics.setColor(new Color(255,255,255));
         graphics.fillRect((int) (s*rect.getX()), (int) (s*rect.getY()),
                 s*(int)rect.getWidth(), s*(int)rect.getHeight());
 
@@ -222,7 +211,6 @@ public class QuadTree {
             result.addAll(drawSector(node.southWest, image, w, h, s, d+1));
             result.addAll(drawSector(node.southEast, image, w, h, s, d+1));
         }
-        System.out.println(node.level);
         return result;
     }
 }
