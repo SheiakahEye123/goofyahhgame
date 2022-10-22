@@ -114,7 +114,6 @@ public class QuadTree {
             g.drawOval(xCoords[i].intValue(),yCoords[i].intValue(),10,10);
         }
         ImageIO.write(image, "png", new File("img.png"));
-        System.out.println("s");
     }
 
     void split() {
@@ -139,6 +138,7 @@ public class QuadTree {
         // Exceeded the capacity so split it in FOUR
         if (northWest == null) {
             split();
+
         }
 
         // Check coordinates belongs to which partition
@@ -193,7 +193,8 @@ public class QuadTree {
 
         Rectangle rect = new Rectangle(node.boundry.getxMin(), node.boundry.getyMin(), node.boundry.getxMax() - node.boundry.getxMin(), node.boundry.getyMax() - node.boundry.getyMin());
         graphics.setColor(new Color(255,255,255));
-        graphics.fillRect((int) (s*rect.getX()), (int) (s*rect.getY()),
+        graphics.setStroke(new BasicStroke(1));
+        graphics.drawRect((int) (s*rect.getX()), (int) (s*rect.getY()),
                 s*(int)rect.getWidth(), s*(int)rect.getHeight());
 
         graphics.setColor(new Color(255,0,255));

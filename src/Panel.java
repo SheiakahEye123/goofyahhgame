@@ -1,5 +1,9 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Panel extends JPanel{
@@ -87,6 +91,54 @@ public class Panel extends JPanel{
             }
         }
         worldstate.bullets = index;
+        //for (int i = 0; i < 1000; i++) {
+            //xCoords[i] = Math.pow(Math.random(), 2) * 1000;
+            //yCoords[i] = Math.pow(Math.random(), 2) * 1000;
+        //}
+//        var tree = new QuadTree(0,new Boundry(0,0,tiles.tileslist.get(0).size(),tiles.tileslist.get(0).size()));
+//        BufferedImage image = null;
+//        try {
+//            image = QuadTreeVisualizer.drawQuadTree(tree);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        Graphics get = image.createGraphics();
+//        for (bullet bullet : worldstate.bullets) {
+//            tree.insert(new Node(bullet));
+//            get.setColor(Color.RED);
+//            get.drawOval((int)bullet.x*100,(int)bullet.y*100,1*100,1*100);
+//        }
+//        for (creature creature : worldstate.creatures) {
+//            tree.insert(new Node(creature));
+//            get.setColor(Color.BLACK);
+//            get.drawOval((int)creature.x*100,(int)creature.y*100,10*100,10*100);
+//        }
+//        g.drawImage(image,0,0,500,500,null);
+
+        var tree = new QuadTree(0,new Boundry(0,0,tiles.tileslist.get(0).size(),tiles.tileslist.get(0).size()));
+        for (bullet bullet : worldstate.bullets) {
+            tree.insert(new Node(bullet));
+        }
+        for (creature creature : worldstate.creatures) {
+            tree.insert(new Node(creature));
+        }
+        BufferedImage image = null;
+        try {
+            image = QuadTreeVisualizer.drawQuadTree(tree);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Graphics get = image.createGraphics();
+        for (bullet bullet : worldstate.bullets) {
+            get.setColor(Color.BLACK);
+            get.drawOval((int)bullet.x,(int)bullet.y,1,1);
+        }
+        for (creature creature : worldstate.creatures) {
+            get.setColor(Color.BLACK);
+            get.drawOval((int)creature.x,(int)creature.y,10,10);
+        }
+        g.drawImage(image,0,0,500,500,null);
+
 
         //player.inventory.inv.get(0).use(player.listener.e, g, tilesWithinScreen2);
         //System.out.println(player.inventory.inv);
