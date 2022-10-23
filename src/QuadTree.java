@@ -74,7 +74,51 @@ class Boundry {
     }
 
     int xMin, yMin, xMax, yMax;
+}
 
+class Hitbox {
+    int xMin, yMin, xMax, yMax;
+    public int getxMin() {
+        return xMin;
+    }
+
+    public int getyMin() {
+        return yMin;
+    }
+
+    public int getxMax() {
+        return xMax;
+    }
+
+    public int getyMax() {
+        return yMax;
+    }
+    public Hitbox(int xMin, int yMin, int xMax, int yMax) {
+        super();
+        /*
+         *  Storing two diagonal points
+         */
+        this.xMin = xMin;
+        this.yMin = yMin;
+        this.xMax = xMax;
+        this.yMax = yMax;
+    }
+    public ArrayList<QuadTree> returnQuads(int d, QuadTree tree) {
+        //takes teh level or something
+
+        return new ArrayList<QuadTree>();
+    }
+    public boolean touching(Boundry boundry) {
+        return (((boundry.xMin >= this.getxMin() && boundry.xMin <= this.getxMax()))|| (boundry.xMax >= this.getxMin() && boundry.xMax <= this.getxMax()))
+                && ((boundry.yMin >= this.getyMin() && boundry.yMin <= this.getyMax()) || (boundry.yMax >= this.getyMin() && boundry.yMax <= this.getyMax()));
+    }
+    public boolean touchingWithin (QuadTree tree) {
+        if (tree.northWest != null) {
+            if (touching(tree.northWest.boundry)) {
+
+            }
+        }
+    }
 }
 
 public class QuadTree {
