@@ -105,19 +105,32 @@ class Hitbox {
     }
     public ArrayList<QuadTree> returnQuads(int d, QuadTree tree) {
         //takes teh level or something
+        for (QuadTree treeToScan : touchingWithin(tree)) {
 
+        }
         return new ArrayList<QuadTree>();
     }
     public boolean touching(Boundry boundry) {
-        return (((boundry.xMin >= this.getxMin() && boundry.xMin <= this.getxMax()))|| (boundry.xMax >= this.getxMin() && boundry.xMax <= this.getxMax()))
+        return (((boundry.xMin >= this.getxMin() && boundry.xMin <= this.getxMax())) || (boundry.xMax >= this.getxMin() && boundry.xMax <= this.getxMax()))
                 && ((boundry.yMin >= this.getyMin() && boundry.yMin <= this.getyMax()) || (boundry.yMax >= this.getyMin() && boundry.yMax <= this.getyMax()));
     }
-    public boolean touchingWithin (QuadTree tree) {
+    public ArrayList<QuadTree> touchingWithin (QuadTree tree) {
+        ArrayList<QuadTree> treeList = new ArrayList<QuadTree>();
         if (tree.northWest != null) {
             if (touching(tree.northWest.boundry)) {
-
+                treeList.add(tree.northWest);
+            }
+            if (touching(tree.northEast.boundry)) {
+                treeList.add(tree.northEast);
+            }
+            if (touching(tree.southWest.boundry)) {
+                treeList.add(tree.southWest);
+            }
+            if (touching(tree.southEast.boundry)) {
+                treeList.add(tree.southEast);
             }
         }
+        return treeList;
     }
 }
 
