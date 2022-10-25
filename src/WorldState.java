@@ -25,7 +25,7 @@ public class WorldState {
 
     shadows shadows = new shadows(dayCycle,tiles2);
 
-
+    Hitbox test = new Hitbox(100,100,300,300);
 
     ArrayList<creature> creatures = new ArrayList<creature>();
 

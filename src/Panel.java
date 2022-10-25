@@ -116,6 +116,7 @@ public class Panel extends JPanel{
 //        g.drawImage(image,0,0,500,500,null);
 
         var tree = new QuadTree(0,new Boundry(0,0,tiles.tileslist.get(0).size(),tiles.tileslist.get(0).size()));
+        System.out.println(worldstate.test.touchingWithin(tree));
         for (bullet bullet : worldstate.bullets) {
             tree.insert(new Node(bullet));
         }
