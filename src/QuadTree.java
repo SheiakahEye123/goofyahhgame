@@ -10,8 +10,8 @@ import java.util.Set;
 
 class Node {
     int x,y;
-    Object obj;
-    public Node(Object obj_) {
+    Collision obj;
+    public Node(Collision obj_) {
         obj = obj_;
     }
     public int getX() {
@@ -31,6 +31,9 @@ class Node {
             return (int) ((creature) obj).y;
         }
         throw new RuntimeException("not");
+    }
+    public Collision getObj() {
+        return obj;
     }
 }
 
@@ -77,7 +80,6 @@ class Boundry {
 }
 
 class Hitbox {
-    ArrayList<QuadTree> treeList = new ArrayList<QuadTree>();
     int xMin, yMin, xMax, yMax;
     public int getxMin() {
         return xMin;
@@ -103,34 +105,38 @@ class Hitbox {
         this.yMax = yMax;
     }
     public boolean touching(Boundry boundry) {
-        return (((boundry.xMin >= this.getxMin() && boundry.xMin <= this.getxMax())) || (boundry.xMax >= this.getxMin() && boundry.xMax <= this.getxMax()))
-                && ((boundry.yMin >= this.getyMin() && boundry.yMin <= this.getyMax()) || (boundry.yMax >= this.getyMin() && boundry.yMax <= this.getyMax()));
+        return (((boundry.xMax >= xMin) && (boundry.xMin <= xMax))
+                && ((boundry.yMax >= yMin) && (boundry.yMin <= yMax)));
     }
-    public ArrayList<QuadTree> touchingWithin (QuadTree tree) {
+    public ArrayList<Node> touchingWithin (QuadTree tree) {
+        var allList = new ArrayList<Node>();
         if (tree.northWest != null) {
             if (touching(tree.northWest.boundry)) {
-                treeList.add(tree.northWest);
-                touchingWithin(tree.northWest);
+                allList.addAll(touchingWithin(tree.northWest));
             }
             if (touching(tree.northEast.boundry)) {
-                treeList.add(tree.northEast);
                 touchingWithin(tree.northEast);
+                allList.addAll(touchingWithin(tree.northEast));
             }
             if (touching(tree.southWest.boundry)) {
-                treeList.add(tree.southWest);
                 touchingWithin(tree.southEast);
+                allList.addAll(touchingWithin(tree.southWest));
             }
             if (touching(tree.southEast.boundry)) {
-                treeList.add(tree.southEast);
                 touchingWithin(tree.southWest);
+                allList.addAll(touchingWithin(tree.southEast));
             }
         }
-        return treeList;
+        if (tree.northWest == null) {
+            return tree.nodes;
+        }
+
+        return allList;
     }
 }
 
 public class QuadTree {
-    final int MAX_CAPACITY = 4;
+    final int MAX_CAPACITY = 40;
     int level = 0;
 
     ArrayList<Node> nodes = new ArrayList<Node>();
@@ -190,7 +196,10 @@ public class QuadTree {
         // Exceeded the capacity so split it in FOUR
         if (northWest == null) {
             split();
-
+            for (Node varnode : nodes) {
+                insert(varnode);
+            }
+            nodes.clear();
         }
 
         // Check coordinates belongs to which partition

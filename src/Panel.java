@@ -116,7 +116,7 @@ public class Panel extends JPanel{
 //        g.drawImage(image,0,0,500,500,null);
 
         var tree = new QuadTree(0,new Boundry(0,0,tiles.tileslist.get(0).size(),tiles.tileslist.get(0).size()));
-        System.out.println(worldstate.test.touchingWithin(tree));
+        var hit = new Hitbox(10,10,20,20);
         for (bullet bullet : worldstate.bullets) {
             tree.insert(new Node(bullet));
         }
@@ -137,6 +137,12 @@ public class Panel extends JPanel{
         for (creature creature : worldstate.creatures) {
             get.setColor(Color.BLACK);
             get.drawOval((int)creature.x,(int)creature.y,10,10);
+        }
+        get.setColor(Color.GREEN);
+        get.drawRect(hit.xMin, hit.yMin, hit.xMax-hit.xMin, hit.yMax-hit.yMin);
+        for (Node node : hit.touchingWithin(tree)) {
+            get.setColor(Color.GREEN);
+            get.drawOval(node.getX(),node.getY(),1,1);
         }
         g.drawImage(image,0,0,500,500,null);
 
