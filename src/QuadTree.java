@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 
 class Node {
@@ -165,13 +166,16 @@ public class QuadTree {
         }
         var tree = new QuadTree(0,new Boundry(0,0,1000,1000));
         var hit = new Hitbox(100,100,400,400);
+
+        for (int i = 0; i < 1000; i++) {
+            tree.insert(new Node(new bullet(xCoords[i],yCoords[i],0,0,false,"",0,0)));
+        }
+
         BufferedImage image = QuadTreeVisualizer.drawQuadTree(tree);
         Graphics get = image.createGraphics();
         get.setColor(Color.GREEN);
         get.drawRect(hit.xMin, hit.yMin, hit.xMax-hit.xMin, hit.yMax-hit.yMin);
-        for (int i = 0; i < 1000; i++) {
-            tree.insert(new Node(new bullet(xCoords[i],yCoords[i],0,0,false,"",0,0)));
-        }
+
         for (int i = 0; i < xCoords.length; i++ ) {
             get.setColor(Color.BLACK);
             get.drawOval(xCoords[i].intValue(),yCoords[i].intValue(),10,10);
@@ -181,7 +185,9 @@ public class QuadTree {
             get.fillOval(node.getX(), node.getY(), 10, 10);
         }
         ImageIO.write(image, "png", new File("img.png"));
+
     }
+
 
     void split() {
         int xOffset = this.boundry.getxMin()
@@ -195,33 +201,40 @@ public class QuadTree {
         southEast = new QuadTree(this.level + 1, new Boundry(xOffset, yOffset, this.boundry.getxMax(), this.boundry.getyMax()));}
 
     void insert(Node node) {
-        if (!this.boundry.inRange(node.getX(), node.getY())) {
-            return;
-        }
-        if (nodes.size() < MAX_CAPACITY) {
-            nodes.add(node);
-            return;
-        }
-        // Exceeded the capacity so split it in FOUR
-        if (northWest == null) {
-            split();
-            for (Node varnode : nodes) {
-                insert(varnode);
-            }
-            nodes.clear();
-        }
+//        if (!this.boundry.inRange(node.getX(), node.getY())) {
+//            return;
+//        }
 
-        // Check coordinates belongs to which partition
-        if (this.northWest.boundry.inRange(node.getX(), node.getY()))
-            this.northWest.insert(node);
-        else if (this.northEast.boundry.inRange(node.getX(), node.getY()))
-            this.northEast.insert(node);
-        else if (this.southWest.boundry.inRange(node.getX(), node.getY()))
-            this.southWest.insert(node);
-        else if (this.southEast.boundry.inRange(node.getX(), node.getY()))
-            this.southEast.insert(node);
-        else
-            System.out.printf("ERROR : Unhandled partition %d %d", node.getX(), node.getY());
+        // Exceeded the capacity so split it in FOUR
+
+        if (northWest == null) {
+            // Has no child, is leaf
+            if (nodes.size() < MAX_CAPACITY) {
+                // has room
+                nodes.add(node);
+            } else {
+                // has no room
+                split();
+                insert(node);
+                for (Node varnode : nodes) {
+                    insert(varnode);
+                }
+                nodes.clear();
+            }
+        } else {
+            // has child, is parent
+            // Check coordinates belongs to which partition
+            if (this.northWest.boundry.inRange(node.getX(), node.getY()))
+                this.northWest.insert(node);
+            else if (this.northEast.boundry.inRange(node.getX(), node.getY()))
+                this.northEast.insert(node);
+            else if (this.southWest.boundry.inRange(node.getX(), node.getY()))
+                this.southWest.insert(node);
+            else if (this.southEast.boundry.inRange(node.getX(), node.getY()))
+                this.southEast.insert(node);
+            else
+                System.out.printf("ERROR : Unhandled partition %d %d", node.getX(), node.getY());
+        }
     }
 }
 
@@ -263,7 +276,7 @@ public class QuadTree {
 
         Rectangle rect = new Rectangle(node.boundry.getxMin(), node.boundry.getyMin(), node.boundry.getxMax() - node.boundry.getxMin(), node.boundry.getyMax() - node.boundry.getyMin());
         graphics.setColor(new Color(25,255,255));
-        graphics.setStroke(new BasicStroke(10));
+        graphics.setStroke(new BasicStroke(1));
         graphics.drawRect((int) (s*rect.getX()), (int) (s*rect.getY()),
                 s*(int)rect.getWidth(), s*(int)rect.getHeight());
 
