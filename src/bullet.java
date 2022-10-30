@@ -21,8 +21,8 @@ public class bullet extends Collision{
         vely = vely_;
     }
 
-    public void draw(WorldState worldstate, Graphics g) {
-        g.setColor(Color.red);
+    public void draw(WorldState worldstate, Graphics g, Color color) {
+        g.setColor(color);
         g.drawRect((int) ((x - worldstate.Player.x) * WorldState.tileSize + 960), (int) ((y - worldstate.Player.y) * WorldState.tileSize + 540), 10, 10);
     }
     public void bulletMotion(WorldState worldstate) {

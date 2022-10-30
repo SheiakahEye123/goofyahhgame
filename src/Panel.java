@@ -76,7 +76,7 @@ public class Panel extends JPanel{
             creature.x += creature.velx;
             creature.y += creature.vely;
             creature.move(Pathfinding.intmap,(int) player.x,(int) player.y);
-            creature.draw(g,player.x, player.y);
+            creature.draw(g,player.x, player.y, Color.red);
         }
 
         for (item i : player.inventory.inv) {
@@ -84,7 +84,7 @@ public class Panel extends JPanel{
         }
         ArrayList<bullet> index = new ArrayList<bullet>();
         for (int b = 0; b < worldstate.bullets.size(); b++) {
-            worldstate.bullets.get(b).draw(worldstate,g);
+            worldstate.bullets.get(b).draw(worldstate,g, Color.red);
             worldstate.bullets.get(b).bulletMotion(worldstate);
             if (!worldstate.bullets.get(b).isCollided(worldstate.bullets.get(b).x,worldstate.bullets.get(b).y,tiles2.tileslist,0.1,0.1)) {
                 index.add(worldstate.bullets.get(b));
@@ -143,6 +143,12 @@ public class Panel extends JPanel{
         for (Node node : hit.touchingWithin(tree)) {
             get.setColor(Color.GREEN);
             get.drawOval(node.getX(),node.getY(),1,1);
+            if (node.getObj() instanceof bullet) {
+                ((bullet) node.getObj()).draw(worldstate,g,Color.green);
+            }
+            if (node.getObj() instanceof creature) {
+                ((creature) node.getObj()).draw(g,player.x,player.y,Color.green);
+            }
         }
         g.drawImage(image,0,0,500,500,null);
 

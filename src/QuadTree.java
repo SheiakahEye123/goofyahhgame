@@ -128,6 +128,8 @@ class Hitbox {
             }
         }
         if (tree.northWest == null) {
+            //tree.nodes.clear();
+            //return new ArrayList<Node>();
             return tree.nodes;
         }
 
@@ -136,7 +138,7 @@ class Hitbox {
 }
 
 public class QuadTree {
-    final int MAX_CAPACITY = 40;
+    final int MAX_CAPACITY = 10;
     int level = 0;
 
     ArrayList<Node> nodes = new ArrayList<Node>();
@@ -162,14 +164,21 @@ public class QuadTree {
             yCoords[i] = Math.pow(Math.random(), 2) * 1000;
         }
         var tree = new QuadTree(0,new Boundry(0,0,1000,1000));
+        var hit = new Hitbox(100,100,400,400);
+        BufferedImage image = QuadTreeVisualizer.drawQuadTree(tree);
+        Graphics get = image.createGraphics();
+        get.setColor(Color.GREEN);
+        get.drawRect(hit.xMin, hit.yMin, hit.xMax-hit.xMin, hit.yMax-hit.yMin);
         for (int i = 0; i < 1000; i++) {
             tree.insert(new Node(new bullet(xCoords[i],yCoords[i],0,0,false,"",0,0)));
         }
-        BufferedImage image = QuadTreeVisualizer.drawQuadTree(tree);
-        Graphics g = image.createGraphics();
         for (int i = 0; i < xCoords.length; i++ ) {
-            g.setColor(Color.BLACK);
-            g.drawOval(xCoords[i].intValue(),yCoords[i].intValue(),10,10);
+            get.setColor(Color.BLACK);
+            get.drawOval(xCoords[i].intValue(),yCoords[i].intValue(),10,10);
+        }
+        for (Node node : hit.touchingWithin(tree)) {
+            get.setColor(Color.GREEN);
+            get.fillOval(node.getX(), node.getY(), 10, 10);
         }
         ImageIO.write(image, "png", new File("img.png"));
     }
@@ -234,7 +243,7 @@ public class QuadTree {
         Graphics2D graphics = image.createGraphics();
 
         // fill entire image
-        graphics.setColor(Color.WHITE);
+        graphics.setColor(Color.white);
         graphics.fillRect(0, 0, w, h);
 
         drawSector(tree, image, w, h, s, 0);
@@ -253,8 +262,8 @@ public class QuadTree {
         Graphics2D graphics = image.createGraphics();
 
         Rectangle rect = new Rectangle(node.boundry.getxMin(), node.boundry.getyMin(), node.boundry.getxMax() - node.boundry.getxMin(), node.boundry.getyMax() - node.boundry.getyMin());
-        graphics.setColor(new Color(255,255,255));
-        graphics.setStroke(new BasicStroke(1));
+        graphics.setColor(new Color(25,255,255));
+        graphics.setStroke(new BasicStroke(10));
         graphics.drawRect((int) (s*rect.getX()), (int) (s*rect.getY()),
                 s*(int)rect.getWidth(), s*(int)rect.getHeight());
 
