@@ -14,6 +14,7 @@ public class creature extends Collision{
     tiles2 tiles2;
     Image image;
 
+
     public creature(tiles2 tiles2_, int x_, int y_, Image image_){
         tiles2 = tiles2_;
         image = image_;

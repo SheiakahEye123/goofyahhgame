@@ -72,11 +72,13 @@ public class Panel extends JPanel{
         tiles2.draws(g,tilesWithinScreen2, playerOffsetX, playerOffsetY);
         pathfinding.pathfind((int) (player.x), (int) (player.y));
         player.draw(g);
+        var tree = new QuadTree(0,new Boundry(0,0,tiles.tileslist.get(0).size(),tiles.tileslist.get(0).size()));
         for(creature creature : worldstate.creatures) {
             creature.x += creature.velx;
             creature.y += creature.vely;
             creature.move(Pathfinding.intmap,(int) player.x,(int) player.y);
             creature.draw(g,player.x, player.y, Color.red);
+            tree.insert(new Node(creature));
         }
 
         for (item i : player.inventory.inv) {
@@ -84,18 +86,22 @@ public class Panel extends JPanel{
         }
         ArrayList<bullet> index = new ArrayList<bullet>();
         for (int b = 0; b < worldstate.bullets.size(); b++) {
-            worldstate.bullets.get(b).draw(worldstate,g, Color.red);
-            worldstate.bullets.get(b).bulletMotion(worldstate);
-            if (!worldstate.bullets.get(b).isCollided(worldstate.bullets.get(b).x,worldstate.bullets.get(b).y,tiles2.tileslist,0.1,0.1)) {
+            var thisBullet = worldstate.bullets.get(b);
+            thisBullet.draw(worldstate,g, Color.red);
+            thisBullet.bulletMotion(worldstate);
+            if (!thisBullet.isCollided(worldstate.bullets.get(b).x,worldstate.bullets.get(b).y,tiles2.tileslist,0.1,0.1)) {
                 index.add(worldstate.bullets.get(b));
+                var nodeList = thisBullet.hitbox.touchingWithin(tree);
+                //change nodes to creatures
+                //also filters shit using dist
+                var creatureList = nodeList.stream()
+                        .map((Node n) -> (creature) n.getObj())
+                        .filter((creature c) -> (Math.hypot(c.x - thisBullet.x, c.y - thisBullet.y) <= ((c.width/2.0) + (thisBullet.size/2.0))))
+                        .toList();
             }
         }
         worldstate.bullets = index;
-        //for (int i = 0; i < 1000; i++) {
-            //xCoords[i] = Math.pow(Math.random(), 2) * 1000;
-            //yCoords[i] = Math.pow(Math.random(), 2) * 1000;
-        //}
-//        var tree = new QuadTree(0,new Boundry(0,0,tiles.tileslist.get(0).size(),tiles.tileslist.get(0).size()));
+//        var hit = new Hitbox(10,0,20,20);
 //        BufferedImage image = null;
 //        try {
 //            image = QuadTreeVisualizer.drawQuadTree(tree);
@@ -104,53 +110,27 @@ public class Panel extends JPanel{
 //        }
 //        Graphics get = image.createGraphics();
 //        for (bullet bullet : worldstate.bullets) {
-//            tree.insert(new Node(bullet));
-//            get.setColor(Color.RED);
-//            get.drawOval((int)bullet.x*100,(int)bullet.y*100,1*100,1*100);
+//            get.setColor(Color.BLACK);
+//            get.drawOval((int)bullet.x,(int)bullet.y,1,1);
 //        }
 //        for (creature creature : worldstate.creatures) {
-//            tree.insert(new Node(creature));
 //            get.setColor(Color.BLACK);
-//            get.drawOval((int)creature.x*100,(int)creature.y*100,10*100,10*100);
+//            get.drawOval((int)creature.x,(int)creature.y,10,10);
+//        }
+//        get.setColor(Color.GREEN);
+//
+//        get.drawRect((int)hit.xMin, (int)hit.yMin, (int) (hit.xMax-hit.xMin), (int) (hit.yMax-hit.yMin));
+//        for (Node node : hit.touchingWithin(tree)) {
+//            get.setColor(Color.GREEN);
+//            get.drawOval(node.getX(),node.getY(),1,1);
+//            if (node.getObj() instanceof bullet) {
+//                ((bullet) node.getObj()).draw(worldstate,g,Color.green);
+//            }
+//            if (node.getObj() instanceof creature) {
+//                ((creature) node.getObj()).draw(g,player.x,player.y,Color.green);
+//            }
 //        }
 //        g.drawImage(image,0,0,500,500,null);
-
-        var tree = new QuadTree(0,new Boundry(0,0,tiles.tileslist.get(0).size(),tiles.tileslist.get(0).size()));
-        var hit = new Hitbox(10,10,20,20);
-        for (bullet bullet : worldstate.bullets) {
-            tree.insert(new Node(bullet));
-        }
-        for (creature creature : worldstate.creatures) {
-            tree.insert(new Node(creature));
-        }
-        BufferedImage image = null;
-        try {
-            image = QuadTreeVisualizer.drawQuadTree(tree);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Graphics get = image.createGraphics();
-        for (bullet bullet : worldstate.bullets) {
-            get.setColor(Color.BLACK);
-            get.drawOval((int)bullet.x,(int)bullet.y,1,1);
-        }
-        for (creature creature : worldstate.creatures) {
-            get.setColor(Color.BLACK);
-            get.drawOval((int)creature.x,(int)creature.y,10,10);
-        }
-        get.setColor(Color.GREEN);
-        get.drawRect(hit.xMin, hit.yMin, hit.xMax-hit.xMin, hit.yMax-hit.yMin);
-        for (Node node : hit.touchingWithin(tree)) {
-            get.setColor(Color.GREEN);
-            get.drawOval(node.getX(),node.getY(),1,1);
-            if (node.getObj() instanceof bullet) {
-                ((bullet) node.getObj()).draw(worldstate,g,Color.green);
-            }
-            if (node.getObj() instanceof creature) {
-                ((creature) node.getObj()).draw(g,player.x,player.y,Color.green);
-            }
-        }
-        g.drawImage(image,0,0,500,500,null);
 
 
         //player.inventory.inv.get(0).use(player.listener.e, g, tilesWithinScreen2);

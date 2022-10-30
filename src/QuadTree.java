@@ -81,23 +81,23 @@ class Boundry {
 }
 
 class Hitbox {
-    int xMin, yMin, xMax, yMax;
-    public int getxMin() {
+    double xMin, yMin, xMax, yMax;
+    public double getxMin() {
         return xMin;
     }
 
-    public int getyMin() {
+    public double getyMin() {
         return yMin;
     }
 
-    public int getxMax() {
+    public double getxMax() {
         return xMax;
     }
 
-    public int getyMax() {
+    public double getyMax() {
         return yMax;
     }
-    public Hitbox(int xMin, int yMin, int xMax, int yMax) {
+    public Hitbox(double xMin, double yMin, double xMax, double yMax) {
         super();
         //cooler boundry
         this.xMin = xMin;
@@ -139,7 +139,7 @@ class Hitbox {
 }
 
 public class QuadTree {
-    final int MAX_CAPACITY = 10;
+    final int MAX_CAPACITY = 50;
     int level = 0;
 
     ArrayList<Node> nodes = new ArrayList<Node>();
@@ -174,7 +174,7 @@ public class QuadTree {
         BufferedImage image = QuadTreeVisualizer.drawQuadTree(tree);
         Graphics get = image.createGraphics();
         get.setColor(Color.GREEN);
-        get.drawRect(hit.xMin, hit.yMin, hit.xMax-hit.xMin, hit.yMax-hit.yMin);
+        get.drawRect((int)hit.xMin, (int)hit.yMin, (int)(hit.xMax-hit.xMin), (int)(hit.yMax-hit.yMin));
 
         for (int i = 0; i < xCoords.length; i++ ) {
             get.setColor(Color.BLACK);

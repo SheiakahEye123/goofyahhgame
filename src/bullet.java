@@ -9,6 +9,7 @@ public class bullet extends Collision{
     String type;
     double velx;
     double vely;
+    Hitbox hitbox;
 
     public bullet(double x_, double y_, double dmg_, double size_, boolean hostile_, String type_, double velx_, double vely_) {
         x = x_;
@@ -19,6 +20,7 @@ public class bullet extends Collision{
         type = type_;
         velx = velx_;
         vely = vely_;
+        hitbox = new Hitbox(x,y,x+size,y+size);
     }
 
     public void draw(WorldState worldstate, Graphics g, Color color) {
@@ -28,5 +30,6 @@ public class bullet extends Collision{
     public void bulletMotion(WorldState worldstate) {
         x += velx;
         y += vely;
+        hitbox = new Hitbox(x,y,x+size,y+size);
     }
 }
