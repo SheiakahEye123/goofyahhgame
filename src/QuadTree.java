@@ -194,7 +194,6 @@ public class QuadTree {
                 + (this.boundry.getxMax() - this.boundry.getxMin()) / 2;
         int yOffset = this.boundry.getyMin()
                 + (this.boundry.getyMax() - this.boundry.getyMin()) / 2;
-
         northWest = new QuadTree(this.level + 1, new Boundry(this.boundry.getxMin(), this.boundry.getyMin(), xOffset, yOffset));
         northEast = new QuadTree(this.level + 1, new Boundry(xOffset, this.boundry.getyMin(), this.boundry.getxMax(), yOffset));
         southWest = new QuadTree(this.level + 1, new Boundry(this.boundry.getxMin(), yOffset, xOffset, this.boundry.getyMax()));
@@ -209,7 +208,7 @@ public class QuadTree {
 
         if (northWest == null) {
             // Has no child, is leaf
-            if (nodes.size() < MAX_CAPACITY) {
+            if (nodes.size() < MAX_CAPACITY || level >= 8) {
                 // has room
                 nodes.add(node);
             } else {

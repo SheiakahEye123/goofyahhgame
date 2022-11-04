@@ -25,8 +25,6 @@ public class tiles2 extends tiles{
                         tilesos.get(y).get(x).blocktype = "fence1";
                     }
                     brush.drawImage(tilesos.get(y).get(x).image, (int) ((x + -x_)* WorldState.tileSize), (int) ((y + -y_) * WorldState.tileSize), null);
-                    brush.setColor(Color.red);
-                    brush.fillRect(x*15,y*15,15,15);
                 }
             }
         }

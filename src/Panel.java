@@ -1,9 +1,5 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Panel extends JPanel{
@@ -12,6 +8,7 @@ public class Panel extends JPanel{
     Player player;
 
     shadows shadows;
+
 
     dayCycle dayCycle;
 
@@ -37,7 +34,7 @@ public class Panel extends JPanel{
     }
     public void paintComponent(Graphics g) {
         startFPS = System.nanoTime();
-        player.accelerate(player.listener.w,player.listener.a,player.listener.s,player.listener.d,player.listener.jump,0.00000000000015);
+        player.accelerate(player.listener.w,player.listener.a,player.listener.s,player.listener.d,player.listener.sprint,0.00000000000015);
         //creature.listener = player.listener;
 
         var tilesWithinScreen = tiles.tilesWithinScreen(g, player.x, player.y);
@@ -48,9 +45,11 @@ public class Panel extends JPanel{
 
         if (!tiles2.isCollided(player.x + player.velx, player.y, tiles2.tileslist, 0.45, 0.45)) {
             player.x += player.velx;
+            player.hitbox = new Hitbox(player.x,player.y,player.x+1,player.y+1 );
         }
         if (!tiles2.isCollided(player.x, player.y + player.vely, tiles2.tileslist, 0.45, 0.45)) {
             player.y += player.vely;
+            player.hitbox = new Hitbox(player.x,player.y,player.x+1,player.y+1 );
         }
 
         dayCycle.Clock();
@@ -58,8 +57,8 @@ public class Panel extends JPanel{
         super.paintComponent (g);
         brush = (Graphics2D) g;
 
-
-        if (dayCycle.timeOfDay >= 0.8 && Math.random() <= 0.0000003 * Panel.elapsedFrame) {
+        //dayCycle.timeOfDay >= 0.8 &&
+        if (Math.random() <= 0.0000003 * Panel.elapsedFrame) {
             creature creatureToAdd = new creature(tiles2,
                     (int) (tiles.tileslist.get(0).size() * Math.random()),
                     (int) (tiles.tileslist.size() * Math.random()),
@@ -73,18 +72,33 @@ public class Panel extends JPanel{
         pathfinding.pathfind((int) (player.x), (int) (player.y));
         player.draw(g);
         var tree = new QuadTree(0,new Boundry(0,0,tiles.tileslist.get(0).size(),tiles.tileslist.get(0).size()));
+        ArrayList<creature> aliveCreatures = new ArrayList<creature>();
         for(creature creature : worldstate.creatures) {
+            if (creature.health > 0) {
+                aliveCreatures.add(creature);
+            }
             creature.x += creature.velx;
             creature.y += creature.vely;
             creature.move(Pathfinding.intmap,(int) player.x,(int) player.y);
-            creature.draw(g,player.x, player.y, Color.red);
+            creature.draw(g,player.x, player.y);
             tree.insert(new Node(creature));
         }
+        worldstate.creatures = aliveCreatures;
 
         for (item i : player.inventory.inv) {
             i.use(player.listener.e, g, tilesWithinScreen2, worldstate);
         }
         ArrayList<bullet> index = new ArrayList<bullet>();
+        var playerNodeList = player.hitbox.touchingWithin(tree);
+        //change nodes to creatures
+        //also filters shit using dist
+        var playerCreatureList = playerNodeList.stream()
+                .map((Node n) -> (creature) n.getObj())
+                .filter((creature c) -> (Math.hypot(c.x - player.x, c.y - player.y) <= ((c.width/ 64.0) + (player.width/64.0))))
+                .toList();
+        if (playerCreatureList.size() >= 1) {
+            player.hp -= 1;
+        }
         for (int b = 0; b < worldstate.bullets.size(); b++) {
             var thisBullet = worldstate.bullets.get(b);
             thisBullet.draw(worldstate,g, Color.red);
@@ -96,8 +110,13 @@ public class Panel extends JPanel{
                 //also filters shit using dist
                 var creatureList = nodeList.stream()
                         .map((Node n) -> (creature) n.getObj())
-                        .filter((creature c) -> (Math.hypot(c.x - thisBullet.x, c.y - thisBullet.y) <= ((c.width/2.0) + (thisBullet.size/2.0))))
+                        .filter((creature c) -> (Math.hypot(c.x - thisBullet.x, c.y - thisBullet.y) <= ((c.width/ 64.0) + (thisBullet.size/2.0))))
                         .toList();
+                for (creature c : creatureList) {
+                    c.health -= 1;
+                    g.setColor(Color.RED);
+                    g.drawRect((int) ((c.x - player.x) * 64 + 960), (int) (((c.y - player.y) * 64 + 540)),10 + 12, 10 + 12);
+                }
             }
         }
         worldstate.bullets = index;

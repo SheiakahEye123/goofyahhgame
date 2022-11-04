@@ -50,8 +50,6 @@ public class tiles extends Collision{
             for (int x = 0; x < tilesToDraw.get(y).size(); x++) {
                 if (tilesToDraw.get(y).get(x) != null) {
                     brush.drawImage(tilesToDraw.get(y).get(x).image, (int) ((x + -x_) * WorldState.tileSize), (int) ((y + -y_) * WorldState.tileSize), null);
-                    brush.setColor(tilesToDraw.get(y).get(x).color);
-                    brush.fillRect(x*15,y*15,15,15);
                 }
             }
         }

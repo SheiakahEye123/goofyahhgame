@@ -11,6 +11,8 @@ public class creature extends Collision{
     int width = 64;
     int height = 64;
 
+    boolean dead;
+
     tiles2 tiles2;
     Image image;
 
@@ -22,10 +24,11 @@ public class creature extends Collision{
         y = y_;
     }
 
-    public void draw(Graphics g, double x_, double y_, Color color){
+    public void draw(Graphics g, double x_, double y_){
         g.drawImage(image, (int) (((x - x_) * 64 + 960) - width/2), (int) (((y - y_) * 64 + 540) - height/2),null);
-        g.setColor(color);
-        g.drawRect((int) ((x - x_) * 64 + 960), (int) (((y - y_) * 64 + 540)),width + 12, height + 12);
+    }
+    public void death(boolean dead) {
+
     }
     public void move(ArrayList<ArrayList<Integer>> intmap, int px, int py) {
         if (intmap.get((int) y).get((int) x) != intmap.get(py).get(px)) {

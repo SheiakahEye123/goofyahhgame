@@ -9,7 +9,7 @@ public class Listener extends JPanel implements KeyListener, MouseListener, Acti
     boolean s;
     boolean d;
     boolean e;
-    boolean jump = false;
+    boolean sprint = false;
 
     double mousex;
     double mousey;
@@ -45,8 +45,8 @@ public class Listener extends JPanel implements KeyListener, MouseListener, Acti
         if (c == KeyEvent.VK_E) {
             e = true;
         }
-        if (c == KeyEvent.VK_SPACE) {
-            jump = true;
+        if (c == KeyEvent.VK_SHIFT) {
+            sprint = true;
         }
     }
 
@@ -67,7 +67,7 @@ public class Listener extends JPanel implements KeyListener, MouseListener, Acti
             s = false;
         }
         if (c == KeyEvent.VK_SPACE) {
-            jump = false;
+            sprint = false;
         }
         if (c == KeyEvent.VK_E) {
             e = false;
