@@ -186,16 +186,20 @@ public class Panel extends JPanel{
         xpoints[4] = 0;
         ypoints[4] = 0;
 
-        xpoints[5] = (int) (rays.get(0).endx * 64);
-        ypoints[5] = (int) (rays.get(0).endy * 64);
+
+        if (rays.size() > 0) {
+            xpoints[5] = (int) (rays.get(0).endx * 64);
+            ypoints[5] = (int) (rays.get(0).endy * 64);
+        }
 
         for (int i = 6; i < rays.size() + 6; i++) {
             xpoints[i] = (int) (rays.get(i - 6).endx * 64);
             ypoints[i] = (int) (rays.get(i - 6).endy * 64);
         }
-
-        xpoints[rays.size() + 6] = (int) (rays.get(0).endx * 64);
-        ypoints[rays.size() + 6] = (int) (rays.get(0).endy * 64);
+        if (rays.size() > 0) {
+            xpoints[rays.size() + 6] = (int) (rays.get(0).endx * 64);
+            ypoints[rays.size() + 6] = (int) (rays.get(0).endy * 64);
+        }
 
         //g.drawLine(xpoints[rays.size()], ypoints[rays.size()], xpoints[rays.size()+1],ypoints[rays.size()+1]);
 

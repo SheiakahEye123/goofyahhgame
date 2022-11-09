@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class tiles extends Collision{
-    ArrayList<ArrayList<tile>> tileslist = new ArrayList<ArrayList<tile>>(24);
+    ArrayList<ArrayList<tile>> tileslist = new ArrayList<ArrayList<tile>>();
 
     public tiles(Path src) {
 
