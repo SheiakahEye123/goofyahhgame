@@ -31,7 +31,7 @@ public class creature extends Collision{
 
     }
     public void move(ArrayList<ArrayList<Integer>> intmap, int px, int py) {
-        if (x - 1 >= 0 && y - 1 >= 0 && y intmap.get((int) y).get((int) x) != intmap.get(py).get(px)) {
+        if (intmap.size() > 0 && intmap.get((int) y).get((int) x) != intmap.get(py).get(px)) {
             if (intmap.get((int) y).get((int) x - 1) == intmap.get((int) y).get((int) x) - 1) {
                 accelerate(false, true, false, false, false,speed);
                 if (!tiles2.isCollided(x + velx, y, tiles2.tileslist, 0.45, 0.45)) {
