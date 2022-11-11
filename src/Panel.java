@@ -58,7 +58,7 @@ public class Panel extends JPanel{
         brush = (Graphics2D) g;
 
         //dayCycle.timeOfDay >= 0.8 &&
-        if (Math.random() <= 0.0000003 * Panel.elapsedFrame) {
+        if (Math.random() <= 0.000000003 * Panel.elapsedFrame) {
             creature creatureToAdd = new creature(tiles2,
                     (int) (tiles.tileslist.get(0).size() * Math.random()),
                     (int) (tiles.tileslist.size() * Math.random()),

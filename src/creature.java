@@ -16,6 +16,8 @@ public class creature extends Collision{
     tiles2 tiles2;
     Image image;
 
+    ArrayList<HomingBullet> homingBullets = new ArrayList<HomingBullet>();
+
 
     public creature(tiles2 tiles2_, int x_, int y_, Image image_){
         tiles2 = tiles2_;
@@ -26,12 +28,16 @@ public class creature extends Collision{
 
     public void draw(Graphics g, double x_, double y_){
         g.drawImage(image, (int) (((x - x_) * 64 + 960) - width/2), (int) (((y - y_) * 64 + 540) - height/2),null);
+        for (HomingBullet homing : homingBullets) {
+            g.drawImage(homing.image, (int) (((homing.x - x_) * 64 + 960) - homing.width/2), (int) (((homing.y - y_) * 64 + 540) - homing.height/2),null);
+        }
     }
-    public void death(boolean dead) {
+
+    public void shoot() {
 
     }
     public void move(ArrayList<ArrayList<Integer>> intmap, int px, int py) {
-        if (intmap.size() > 0 && intmap.get((int) y).get((int) x) != intmap.get(py).get(px)) {
+        if (intmap.size() > 0 && intmap.get((int) y).get((int) x) != intmap.get(py).get(px) && x - 1 >= 0 && y - 1 >= 0) {
             if (intmap.get((int) y).get((int) x - 1) == intmap.get((int) y).get((int) x) - 1) {
                 accelerate(false, true, false, false, false,speed);
                 if (!tiles2.isCollided(x + velx, y, tiles2.tileslist, 0.45, 0.45)) {

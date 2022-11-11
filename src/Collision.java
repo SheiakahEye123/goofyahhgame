@@ -6,19 +6,15 @@ public class Collision extends accelerate{
             return false;
         }
         if (tilesonscreen.get((int)(yadd - hitboxY)).get((int)(xadd - hitboxX)) != null) {
-            System.out.println(tilesonscreen.size());
             return true;
         }
         if (tilesonscreen.get((int)(yadd + hitboxY)).get((int)(xadd + hitboxX)) != null) {
-            System.out.println(tilesonscreen.size());
             return true;
         }
         if (tilesonscreen.get((int)(yadd - hitboxY)).get((int)(xadd + hitboxX)) != null) {
-            System.out.println(tilesonscreen.size());
             return true;
         }
         if (tilesonscreen.get((int)(yadd + hitboxY)).get((int)(xadd - hitboxX)) != null) {
-            System.out.println(tilesonscreen.size());
             return true;
         }
 
