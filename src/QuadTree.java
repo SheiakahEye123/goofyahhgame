@@ -22,6 +22,9 @@ class Node {
         if (obj instanceof creature) {
             return (int) ((creature)obj).x;
         }
+        if (obj instanceof HomingBullet) {
+            return (int) ((HomingBullet)obj).x;
+        }
         throw new RuntimeException("not");
     }
     public int getY() {
@@ -30,6 +33,9 @@ class Node {
         }
         if (obj instanceof creature) {
             return (int) ((creature) obj).y;
+        }
+        if (obj instanceof HomingBullet) {
+            return (int) ((HomingBullet)obj).y;
         }
         throw new RuntimeException("not");
     }

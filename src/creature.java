@@ -6,6 +6,9 @@ public class creature extends Collision{
     double dmg;
     double x;
     double y;
+
+    long current;
+    long last;
     double speed = 0.000000000000015;
 
     int width = 64;
@@ -24,18 +27,23 @@ public class creature extends Collision{
         image = image_;
         x = x_;
         y = y_;
+        last = System.currentTimeMillis();
     }
 
     public void draw(Graphics g, double x_, double y_){
         g.drawImage(image, (int) (((x - x_) * 64 + 960) - width/2), (int) (((y - y_) * 64 + 540) - height/2),null);
         for (HomingBullet homing : homingBullets) {
-            g.drawImage(homing.image, (int) (((homing.x - x_) * 64 + 960) - homing.width/2), (int) (((homing.y - y_) * 64 + 540) - homing.height/2),null);
+            homing.draw(g,x_,y_);
         }
+        if (homingBullets.size() < 1) { homingBullets.add(new HomingBullet(tiles2,(int) x,(int) y,null)); }
+        if (last - System.currentTimeMillis() >= 2000) {
+            homingBullets.add(new HomingBullet(tiles2,(int) x,(int) y,null));
+            System.out.println("did");
+        }
+        last = System.currentTimeMillis();
     }
 
-    public void shoot() {
 
-    }
     public void move(ArrayList<ArrayList<Integer>> intmap, int px, int py) {
         if (intmap.size() > 0 && intmap.get((int) y).get((int) x) != intmap.get(py).get(px) && x - 1 >= 0 && y - 1 >= 0) {
             if (intmap.get((int) y).get((int) x - 1) == intmap.get((int) y).get((int) x) - 1) {
@@ -79,6 +87,9 @@ public class creature extends Collision{
                 return;
             }
             accelerate(false, false, false, false, false,speed);
+        }
+        for (HomingBullet homing : homingBullets) {
+            homing.move(intmap,px,py);
         }
     }
 
