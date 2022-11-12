@@ -4,9 +4,10 @@ public class MosinNagant extends weapon{
     public MosinNagant() {
         super();
         img = new ImageIcon("src/textures/scythe.png").getImage();
-        name = "weapon";
+        name = "Mosin Nagant";
         time = System.nanoTime();
-        seconds = 0.5;
+        seconds = 2;
         dmg = 100;
+        speed = 5;
     }
 }

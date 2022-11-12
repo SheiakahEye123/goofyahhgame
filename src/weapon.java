@@ -7,6 +7,7 @@ public abstract class weapon extends item{
     long timeatlastuse;
     double seconds;
     double dmg;
+    double speed;
     public weapon() {
         super();
         img = new ImageIcon("src/textures/scythe.png").getImage();
@@ -21,7 +22,7 @@ public abstract class weapon extends item{
                 double bvely = p.y - 572;
                 double bvelx = p.x - 960;
                 double dist = (Math.hypot(960 - p.x,572 - p.y)) * 10;
-                worldstate.bullets.add(new bullet(worldstate.Player.x - 0.05,worldstate.Player.y - 0.05,dmg, 0.1, true, "bleed", bvelx/dist, bvely/dist));
+                worldstate.bullets.add(new bullet(worldstate.Player.x - 0.05,worldstate.Player.y - 0.05,dmg, 0.1, true, "bleed", (bvelx/dist) * speed, (bvely/dist) * speed));
                 timeatlastuse = System.nanoTime();
             }
         }
