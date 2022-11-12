@@ -29,7 +29,7 @@ public class creature extends Collision{
         y = y_;
         last = System.currentTimeMillis();
         worldState = worldState_;
-        dmg = 0.1;
+        dmg = 0.0001;
     }
 
     public void draw(Graphics g, double x_, double y_){

@@ -111,8 +111,12 @@ public class Panel extends JPanel{
                 .filter((creature c) -> (Math.hypot(c.x - player.x, c.y - player.y) <= ((c.width/ 64.0) + (player.width/64.0))))
                 .toList();
         for (creature c : playerCreatureList) {
-            player.dmg -= c.dmg;
+            player.hp -= c.dmg;
+            if (c instanceof HomingBullet) {
+                c.health = 0;
+            }
         }
+
         for (int b = 0; b < worldstate.bullets.size(); b++) {
             var thisBullet = worldstate.bullets.get(b);
             thisBullet.draw(worldstate,g, Color.red);

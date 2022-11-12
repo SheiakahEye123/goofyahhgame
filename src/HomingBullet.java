@@ -7,7 +7,7 @@ public class HomingBullet extends creature{
         height = 10;
         width = 10;
         health = 10;
-        dmg = 0.01;
+        dmg = 0.000001;
         image = new ImageIcon("src/textures/homing.png").getImage();
         speed = 0.00000000000015;
     }

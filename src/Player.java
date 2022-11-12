@@ -4,7 +4,7 @@ import java.awt.*;
 public class Player extends Collision{
     int hp = 100;
     int stamina = 100;
-    double dmg = 0.1;
+    double dmg = 100;
     int sanity = 100;
     double x = 10;
     double y = 5;
