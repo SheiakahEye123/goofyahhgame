@@ -59,10 +59,11 @@ public class Panel extends JPanel{
 
         //dayCycle.timeOfDay >= 0.8 &&
         if (Math.random() <= 0.000000003 * Panel.elapsedFrame) {
-            creature creatureToAdd = new creature(tiles2,
+            creature creatureToAdd = new creature(
                     (int) (tiles.tileslist.get(0).size() * Math.random()),
                     (int) (tiles.tileslist.size() * Math.random()),
-                    new ImageIcon("src/textures/guy.png").getImage());
+                    new ImageIcon("src/textures/guy.png").getImage(),
+                    worldstate);
             if (!tiles2.isCollided(creatureToAdd.x, creatureToAdd.y, tiles2.tileslist, 0.45, 0.45)) {
                 worldstate.creatures.add(creatureToAdd);
             }
@@ -73,6 +74,7 @@ public class Panel extends JPanel{
         player.draw(g);
         var tree = new QuadTree(0,new Boundry(0,0,tiles.tileslist.get(0).size(),tiles.tileslist.get(0).size()));
         ArrayList<creature> aliveCreatures = new ArrayList<creature>();
+        var aliveHomings = new ArrayList<HomingBullet>();
         for(creature creature : worldstate.creatures) {
             if (creature.health > 0) {
                 aliveCreatures.add(creature);
@@ -83,7 +85,19 @@ public class Panel extends JPanel{
             creature.draw(g,player.x, player.y);
             tree.insert(new Node(creature));
         }
+        for (HomingBullet homing : worldstate.enemyBullets) {
+            if (homing.health > 0) {
+                aliveHomings.add(homing);
+            }
+            homing.x += homing.velx;
+            homing.y += homing.vely;
+            homing.move(Pathfinding.intmap,(int) player.x,(int) player.y);
+            homing.draw(g,player.x, player.y);
+            tree.insert(new Node(homing));
+        }
         worldstate.creatures = aliveCreatures;
+        worldstate.enemyBullets = aliveHomings;
+
 
         for (item i : player.inventory.inv) {
             i.use(player.listener.e, g, tilesWithinScreen2, worldstate);
@@ -96,8 +110,8 @@ public class Panel extends JPanel{
                 .map((Node n) -> (creature) n.getObj())
                 .filter((creature c) -> (Math.hypot(c.x - player.x, c.y - player.y) <= ((c.width/ 64.0) + (player.width/64.0))))
                 .toList();
-        if (playerCreatureList.size() >= 1) {
-            player.hp -= 1;
+        for (creature c : playerCreatureList) {
+            player.dmg -= c.dmg;
         }
         for (int b = 0; b < worldstate.bullets.size(); b++) {
             var thisBullet = worldstate.bullets.get(b);
@@ -167,7 +181,7 @@ public class Panel extends JPanel{
             ray.endy -= playerOffsetY;
         }
 
-        int i1 = (rays.size() + 20);
+        int i1 = (rays.size() + 7);
         int[] xpoints = new int[i1];
         int[] ypoints = new int[i1];
 

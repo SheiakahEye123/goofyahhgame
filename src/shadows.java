@@ -87,6 +87,14 @@ public class shadows {
                 //g.drawLine((int) ((ray.startx - startx) * tilesize + (960 * dayTime)), (int) ((ray.starty - starty) * tilesize + (540 * dayTime)), (int) ((ray.endx - startx) * tilesize + 960), (int) ((ray.endy - starty) * tilesize + 540));
             }
         }
+        var ray1 = new ray(startx,starty,0,0,0);
+        var ray2 = new ray(startx,starty,tiless.get(0).size(),0,0);
+        var ray3 = new ray(startx,starty,0,tiless.size(),0);
+        var ray4 = new ray(startx,starty,tiless.get(0).size(),tiless.size(),0);
+        rays.add(ray1);
+        rays.add(ray2);
+        rays.add(ray3);
+        rays.add(ray4);
         Collections.sort(rays,
                 (ray one, ray two) -> {
                     if (one.angle < two.angle) {
