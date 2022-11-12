@@ -20,6 +20,10 @@ public class item extends Collision{
         return name;
     }
 
+    public void draw() {
+
+    }
+
     public void use(boolean e, Graphics g, ArrayList<ArrayList<tile>> tilesOnScreen, WorldState worldstate) {
     }
 }

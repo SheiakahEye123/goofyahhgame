@@ -99,8 +99,10 @@ public class Panel extends JPanel{
         worldstate.enemyBullets = aliveHomings;
 
 
-        for (item i : player.inventory.inv) {
-            i.use(player.listener.e, g, tilesWithinScreen2, worldstate);
+        for (Object i : player.inventory.inv) {
+            if (i instanceof item) {
+                ((item) i).use(player.listener.e, g, tilesWithinScreen2, worldstate);
+            }
         }
         ArrayList<bullet> index = new ArrayList<bullet>();
         var playerNodeList = player.hitbox.touchingWithin(tree);

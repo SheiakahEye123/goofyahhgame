@@ -15,7 +15,7 @@ public class Player extends Collision{
     public Player(Listener listener_) {
         listener = listener_;
         int hp = 100;
-        inventory.inv.add(new scythe());
+        inventory.inv.add(new MosinNagant());
     }
 
     public void draw(Graphics g) {
