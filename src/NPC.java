@@ -1,2 +1,2 @@
-public class NPC extends c{
+public class NPC{
 }
