@@ -177,8 +177,8 @@ public class Panel extends JPanel{
         //player.inventory.inv.get(0).use(player.listener.e, g, tilesWithinScreen2);
         //System.out.println(player.inventory.inv);
 
-        var rays = shadows.rayCast(WorldState.screenWidthTiles/2 + playerOffsetX,
-                WorldState.screenHeightTiles/2 + playerOffsetY,
+        var rays = shadows.rayCast(WorldState.screenWidthTiles/2 + playerOffsetX + Util.globalRenderOffset,
+                WorldState.screenHeightTiles/2 + playerOffsetY + Util.globalRenderOffset,
                                                 tilesWithinScreen2, g);
 
         // shift all X and Y points in ray by playerOffset
@@ -215,8 +215,8 @@ public class Panel extends JPanel{
         }
 
         for (int i = 6; i < rays.size() + 6; i++) {
-            xpoints[i] = (int) (rays.get(i - 6).endx * WorldState.tileSize);
-            ypoints[i] = (int) (rays.get(i - 6).endy * WorldState.tileSize);
+            xpoints[i] = (int) ((rays.get(i - 6).endx) * WorldState.tileSize);
+            ypoints[i] = (int) ((rays.get(i - 6).endy) * WorldState.tileSize);
         }
         if (rays.size() > 0) {
             xpoints[rays.size() + 6] = (int) (rays.get(0).endx * WorldState.tileSize);

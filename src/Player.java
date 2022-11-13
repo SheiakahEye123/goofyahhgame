@@ -13,7 +13,7 @@ public class Player extends Collision{
     public static double hitBoxWidth = 1;
     Hitbox hitbox = new Hitbox(x,y,x+1,y+1 );
     inventory inventory = new inventory();
-    Image sprite = new ImageIcon("src/textures/guy.png").getImage();
+    Image sprite = new ImageIcon("src/textures/you.png").getImage();
 
     public Player(Listener listener_) {
         listener = listener_;

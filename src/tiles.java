@@ -49,17 +49,17 @@ public class tiles extends Collision{
         for (int y = 0; y < tilesToDraw.size(); y++) {
             for (int x = 0; x < tilesToDraw.get(y).size(); x++) {
                 if (tilesToDraw.get(y).get(x) != null) {
-                    brush.drawImage(tilesToDraw.get(y).get(x).image, (int) ((x + -x_) * WorldState.tileSize), (int) ((y + -y_) * WorldState.tileSize), null);
+                    brush.drawImage(tilesToDraw.get(y).get(x).image, (int) ((x + -x_ - Util.globalRenderOffset) * WorldState.tileSize), (int) ((y + -y_ - Util.globalRenderOffset) * WorldState.tileSize), null);
                 }
             }
         }
     }
     public ArrayList<ArrayList<tile>> tilesWithinScreen(Graphics g, double x, double y) {
         ArrayList<ArrayList<tile>> tilesOnScreen = new ArrayList<ArrayList<tile>>();
-        double left = x - WorldState.screenWidthTiles/2;
-        double right = x + WorldState.screenWidthTiles/2;
-        double top = y - WorldState.screenHeightTiles/2 ;
-        double bottom = y + WorldState.screenHeightTiles/2;
+        double left = x - WorldState.screenWidthTiles/2 - Util.globalRenderOffset;
+        double right = x + WorldState.screenWidthTiles/2 + Util.globalRenderOffset;
+        double top = y - WorldState.screenHeightTiles/2 - Util.globalRenderOffset;
+        double bottom = y + WorldState.screenHeightTiles/2 + Util.globalRenderOffset;
 
 
         for (double i = top; i < bottom; i++) {
