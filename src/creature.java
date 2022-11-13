@@ -19,8 +19,6 @@ public class creature extends Collision{
 
     Image image;
 
-    ArrayList<HomingBullet> homingBullets = new ArrayList<HomingBullet>();
-
 
     public creature(int x_, int y_, Image image_, WorldState worldState_){
         image = image_;
@@ -35,7 +33,12 @@ public class creature extends Collision{
         g.drawImage(image, (int) (((x - x_) * WorldState.tileSize + 960) - hitBoxWidth/2), (int) (((y - y_) * WorldState.tileSize + 540) - hitBoxWidth/2),null);
         //if (homingBullets.size() < 1) { homingBullets.add(new HomingBullet((int) x,(int) y,null)); }
         if (System.currentTimeMillis() - last >= 2000) {
-            worldState.enemyBullets.add(new HomingBullet((int) x,(int) y,null, worldState));
+            if (Math.random() * 100 <= 5) {
+                worldState.enemyBullets.add(new HomingBullet((int) x,(int) y,null, worldState));
+            }
+            else {
+                worldState.enemyBullets.add(new EBullet((int) x,(int) y,null, worldState));
+            }
             last = System.currentTimeMillis();
         }
     }

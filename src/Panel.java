@@ -76,7 +76,7 @@ public class Panel extends JPanel{
         player.draw(g);
         var tree = new QuadTree(0,new Boundry(0,0,tiles.tileslist.get(0).size(),tiles.tileslist.get(0).size()));
         ArrayList<creature> aliveCreatures = new ArrayList<creature>();
-        var aliveHomings = new ArrayList<HomingBullet>();
+        var aliveHomings = new ArrayList<Object>();
         for(creature creature : worldstate.creatures) {
             if (creature.health > 0) {
                 aliveCreatures.add(creature);
@@ -87,15 +87,26 @@ public class Panel extends JPanel{
             creature.draw(g,player.x, player.y);
             tree.insert(new Node(creature));
         }
-        for (HomingBullet homing : worldstate.enemyBullets) {
-            if (homing.health > 0) {
-                aliveHomings.add(homing);
+        for (Object homing : worldstate.enemyBullets) {
+            if (homing instanceof HomingBullet){
+                if (((HomingBullet) homing).health > 0) {
+                    aliveHomings.add((HomingBullet) homing);
+                }
+                ((HomingBullet) homing).x += ((HomingBullet) homing).velx;
+                ((HomingBullet) homing).y += ((HomingBullet) homing).vely;
+                ((HomingBullet) homing).move(Pathfinding.intmap, (int) player.x, (int) player.y);
+                ((HomingBullet) homing).draw(g, player.x, player.y);
+                tree.insert(new Node(((HomingBullet) homing)));
             }
-            homing.x += homing.velx;
-            homing.y += homing.vely;
-            homing.move(Pathfinding.intmap,(int) player.x,(int) player.y);
-            homing.draw(g,player.x, player.y);
-            tree.insert(new Node(homing));
+            if (homing instanceof EBullet){
+                if (((EBullet) homing).health > 0) {
+                    aliveHomings.add((EBullet) homing);
+                }
+                ((EBullet) homing).x += ((EBullet) homing).velx;
+                ((EBullet) homing).y += ((EBullet) homing).vely;
+                ((EBullet) homing).draw(g, player.x, player.y);
+                tree.insert(new Node(((EBullet) homing)));
+            }
         }
         worldstate.creatures = aliveCreatures;
         worldstate.enemyBullets = aliveHomings;

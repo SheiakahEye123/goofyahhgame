@@ -29,8 +29,7 @@ public class WorldState {
 
     ArrayList<creature> creatures = new ArrayList<creature>();
 
-    ArrayList<HomingBullet> enemyBullets = new ArrayList<HomingBullet>();
-
+    ArrayList<Object> enemyBullets = new ArrayList<Object>();
     ArrayList<bullet> bullets = new ArrayList<>();
 
     public static Point getMouseLocation(){
