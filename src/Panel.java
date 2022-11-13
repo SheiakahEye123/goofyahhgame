@@ -20,6 +20,8 @@ public class Panel extends JPanel{
 
     WorldState worldstate;
 
+    public static final int pixelsPerTile = 64;
+
     static long elapsedFrame,startFPS=System.nanoTime(),endFPS=System.nanoTime();
 
     Graphics2D brush;
@@ -110,7 +112,7 @@ public class Panel extends JPanel{
         //also filters shit using dist
         var playerCreatureList = playerNodeList.stream()
                 .map((Node n) -> (creature) n.getObj())
-                .filter((creature c) -> (Math.hypot(c.x - player.x, c.y - player.y) <= ((c.width/ 64.0) + (player.width/64.0))))
+                .filter((creature c) -> (Math.hypot(c.x - player.x, c.y - player.y) <= 1 + creature.hitBoxWidth))
                 .toList();
         for (creature c : playerCreatureList) {
             player.hp -= c.dmg;
@@ -130,12 +132,12 @@ public class Panel extends JPanel{
                 //also filters shit using dist
                 var creatureList = nodeList.stream()
                         .map((Node n) -> (creature) n.getObj())
-                        .filter((creature c) -> (Math.hypot(c.x - thisBullet.x, c.y - thisBullet.y) <= ((c.width/ 64.0) + (thisBullet.size/2.0))))
+                        .filter((creature c) -> (Math.hypot(c.x - thisBullet.x, c.y - thisBullet.y) <= (creature.hitBoxWidth + (thisBullet.size/2.0))))
                         .toList();
                 for (creature c : creatureList) {
                     c.health -= 1;
                     g.setColor(Color.RED);
-                    g.drawRect((int) ((c.x - player.x) * 64 + 960), (int) (((c.y - player.y) * 64 + 540)),10 + 12, 10 + 12);
+                    g.drawRect((int) ((c.x - player.x) * WorldState.tileSize + 960), (int) (((c.y - player.y) * WorldState.tileSize + 540)),10 + 12, 10 + 12);
                 }
             }
         }
@@ -208,17 +210,17 @@ public class Panel extends JPanel{
 
 
         if (rays.size() > 0) {
-            xpoints[5] = (int) (rays.get(0).endx * 64);
-            ypoints[5] = (int) (rays.get(0).endy * 64);
+            xpoints[5] = (int) (rays.get(0).endx * WorldState.tileSize);
+            ypoints[5] = (int) (rays.get(0).endy * WorldState.tileSize);
         }
 
         for (int i = 6; i < rays.size() + 6; i++) {
-            xpoints[i] = (int) (rays.get(i - 6).endx * 64);
-            ypoints[i] = (int) (rays.get(i - 6).endy * 64);
+            xpoints[i] = (int) (rays.get(i - 6).endx * WorldState.tileSize);
+            ypoints[i] = (int) (rays.get(i - 6).endy * WorldState.tileSize);
         }
         if (rays.size() > 0) {
-            xpoints[rays.size() + 6] = (int) (rays.get(0).endx * 64);
-            ypoints[rays.size() + 6] = (int) (rays.get(0).endy * 64);
+            xpoints[rays.size() + 6] = (int) (rays.get(0).endx * WorldState.tileSize);
+            ypoints[rays.size() + 6] = (int) (rays.get(0).endy * WorldState.tileSize);
         }
 
         //g.drawLine(xpoints[rays.size()], ypoints[rays.size()], xpoints[rays.size()+1],ypoints[rays.size()+1]);

@@ -222,7 +222,14 @@ public class QuadTree {
                 split();
                 insert(node);
                 for (Node varnode : nodes) {
-                    insert(varnode);
+                    if (this.northWest.boundry.inRange(varnode.getX(), varnode.getY()))
+                        this.northWest.insert(varnode);
+                    else if (this.northEast.boundry.inRange(varnode.getX(), varnode.getY()))
+                        this.northEast.insert(varnode);
+                    else if (this.southWest.boundry.inRange(varnode.getX(), varnode.getY()))
+                        this.southWest.insert(varnode);
+                    else if (this.southEast.boundry.inRange(varnode.getX(), varnode.getY()))
+                        this.southEast.insert(varnode);
                 }
                 nodes.clear();
             }

@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class HomingBullet extends creature{
+    int height;
+    int width;
     public HomingBullet(int x_, int y_, Image image_, WorldState worldState_) {
         super(x_, y_, image_, worldState_);
         height = 10;
@@ -12,6 +14,6 @@ public class HomingBullet extends creature{
         speed = 0.00000000000015;
     }
     public void draw(Graphics g, double x_, double y_) {
-        g.drawImage(image, (int) (((x - x_) * 64 + 960) - width / 2), (int) (((y - y_) * 64 + 540) - height / 2), null);
+        g.drawImage(image, (int) (((x - x_) * WorldState.tileSize + 960) - width / 2), (int) (((y - y_) * 64 + 540) - height / 2), null);
     }
 }

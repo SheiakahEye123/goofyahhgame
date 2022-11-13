@@ -7,14 +7,13 @@ public class creature extends Collision{
     double x;
     double y;
 
+    public static double hitBoxWidth = 1;
+
     WorldState worldState;
 
     long current;
     long last;
     double speed = 0.000000000000015;
-
-    int width = 64;
-    int height = 64;
 
     boolean dead;
 
@@ -33,7 +32,7 @@ public class creature extends Collision{
     }
 
     public void draw(Graphics g, double x_, double y_){
-        g.drawImage(image, (int) (((x - x_) * 64 + 960) - width/2), (int) (((y - y_) * 64 + 540) - height/2),null);
+        g.drawImage(image, (int) (((x - x_) * WorldState.tileSize + 960) - hitBoxWidth/2), (int) (((y - y_) * WorldState.tileSize + 540) - hitBoxWidth/2),null);
         //if (homingBullets.size() < 1) { homingBullets.add(new HomingBullet((int) x,(int) y,null)); }
         if (System.currentTimeMillis() - last >= 2000) {
             worldState.enemyBullets.add(new HomingBullet((int) x,(int) y,null, worldState));

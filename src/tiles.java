@@ -56,10 +56,10 @@ public class tiles extends Collision{
     }
     public ArrayList<ArrayList<tile>> tilesWithinScreen(Graphics g, double x, double y) {
         ArrayList<ArrayList<tile>> tilesOnScreen = new ArrayList<ArrayList<tile>>();
-        double left = x - WorldState.screenWidthTiles/2 - 4;
-        double right = x + WorldState.screenWidthTiles/2 + 4;
-        double top = y - WorldState.screenHeightTiles/2 - 4;
-        double bottom = y + WorldState.screenHeightTiles/2 + 4;
+        double left = x - WorldState.screenWidthTiles/2;
+        double right = x + WorldState.screenWidthTiles/2;
+        double top = y - WorldState.screenHeightTiles/2 ;
+        double bottom = y + WorldState.screenHeightTiles/2;
 
 
         for (double i = top; i < bottom; i++) {
